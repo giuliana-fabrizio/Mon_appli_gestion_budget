@@ -13,7 +13,7 @@ class Model {
         Utilisateur *user;
         std::vector<std::string> listCategories;
         int getIndex(std::string var, std::vector<std::string>);
-        std::vector<double> listerHistoriqueDepenseParCategory(Date debut, Date fin);
+        // std::vector<double> listerHistoriqueDepenseParCategory(Date debut, Date fin);
 };
 
 #endif

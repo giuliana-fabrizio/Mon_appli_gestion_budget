@@ -5,7 +5,8 @@ NvBudgetView::NvBudgetView() {
     labelPage = new QLabel("Définir un nouveau budget");
     labelDateDebut = new QLabel("Date de début :");
     labelDateFin = new QLabel("Date de fin :");
-    labelMontant = new QLabel("Montant :");
+    labelRevenu = new QLabel("Saisir un revenu :");
+    labelLibelleRevenu = new QLabel("Saisir le type revenu :");
 
     comboBoxJourDebut = new QComboBox();
     comboBoxJourFin = new QComboBox();
@@ -14,7 +15,7 @@ NvBudgetView::NvBudgetView() {
 
     // QLabel *labelAnnee = new QLabel(QString::number(annee_courante));
 
-    textEditMontant = new QTextEdit();
+    textEditRevenu = new QTextEdit();
     btnValide = new QPushButton("Valider");
     frame = new QFrame();
     layout = new QGridLayout(frame);
@@ -49,9 +50,11 @@ void NvBudgetView::addToWindow() {
     layout->addWidget(comboBoxJourFin, 2, 1);
     layout->addWidget(comboBoxMoisFin, 2, 2);
     // layout->addWidget(labelAnnee, 2, 3);
-    layout->addWidget(labelMontant, 3, 0);
-    layout->addWidget(textEditMontant, 3, 1);
-    layout->addWidget(btnValide, 4, 0);
+    layout->addWidget(labelRevenu, 3, 0);
+    layout->addWidget(textEditRevenu, 3, 1);
+    layout->addWidget(labelLibelleRevenu, 4, 0);
+    layout->addWidget(textEditTypeRevenu, 4, 1);
+    layout->addWidget(btnValide, 5, 0);
 }
 
 QComboBox* NvBudgetView::getComboBoxJourDebut() {
@@ -70,8 +73,12 @@ QComboBox* NvBudgetView::getComboBoxMoisFin() {
     return comboBoxMoisFin;
 }
 
-QTextEdit* NvBudgetView::getTextEditMontant() {
-    return textEditMontant;
+QTextEdit* NvBudgetView::getTextEditRevenu() {
+    return textEditRevenu;
+}
+
+QTextEdit* NvBudgetView::getTextEditTypeRevenu() {
+    return textEditTypeRevenu;
 }
 
 QPushButton *NvBudgetView::getBtnValide() {

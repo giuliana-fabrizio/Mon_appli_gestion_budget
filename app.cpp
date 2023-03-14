@@ -6,14 +6,17 @@ int main(int argc, char **argv) {
     QWidget window;
 
 
-    Date date_naissance = {27, 11, 2002};
-    Utilisateur *user = new Utilisateur(date_naissance, "nom", "passwd", "prenom", "username");
-    Date date_debut = {1, 12, 2023};
-    Date date_fin = {31, 12, 2023};
-    user->ajouterBudget(date_debut, date_fin, 545);
-    Date dateDepense = {2, 12, 2023};
-    user->ajouterDepense(dateDepense, 52.23, "Cadeau de Noël pour Philip (peluche ours)", "autre");
-    user->ajouterDepense(dateDepense, 35.89, "Course heddomadaire (shampooing, brosse à dent, nems)", "nourriture");
+    Date debutBudG = {1, 12, 2023};
+    Date finBudG = {31, 12, 2023};
+    Date depense = {3, 12, 2023};
+    Revenu revenu = {2045.86, "salaire"};
+    double montant = 50.53;
+    std::string description = "Ours en peluche pour Jerémy";
+
+    Utilisateur *user = new Utilisateur();
+    user->ajouterBudget(debutBudG, finBudG, revenu);
+    user->ajouterDepense(depense, montant, description, 0);
+
 
     Model *model = new Model(user);
     View *view = new View(model);

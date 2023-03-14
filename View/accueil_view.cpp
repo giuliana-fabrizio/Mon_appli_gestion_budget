@@ -14,17 +14,16 @@ AccueilView::AccueilView(Model *model) {
 }
 
 void AccueilView::init() {
-    double total = 0;
-    for (Depense depense : model->getUser()->listerHistoriqueDepense(
-        model->getUser()->getHistoriqueBudget()[model->getUser()->getHistoriqueBudget().size()-1].date_debut,
-        model->getUser()->getHistoriqueBudget()[model->getUser()->getHistoriqueBudget().size()-1].date_fin
-    )) {
-            valeurs->append(QString::fromStdString(depense.category), depense.montant_depense);
-            total += depense.montant_depense;
+    // double total = 0;
+    for (Enveloppe enveloppe : model->getUser()->getLastBudget().autres_depenses) {
+        double montant = 0;
+        for (Depense depense : enveloppe.list_depense) montant += depense.montant_depense;
+        valeurs->append(QString::fromStdString(enveloppe.libelle_enveloppe), montant);
+        // total += depense.montant_depense;
     }
-    pgBarDepense->setValue(model->getUser()->getHistoriqueBudget()[model->getUser()->getHistoriqueBudget().size()-1].montant/total);
+    pgBarDepense->setValue(45 /*model->getUser()->getHistoriqueBudget()[model->getUser()->getHistoriqueBudget().size()-1].montant/total */);
     chart->addSeries(valeurs);
-    chart->setTitle("Détail de mes dépenses");
+    chart->setTitle("Détail de mes dépenses autres");
 }
 
 void AccueilView::setStyle() {

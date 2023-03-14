@@ -14,7 +14,8 @@ class NvBudgetView {
         QComboBox *getComboBoxJourFin();
         QComboBox *getComboBoxMoisDebut();
         QComboBox *getComboBoxMoisFin();
-        QTextEdit *getTextEditMontant();
+        QTextEdit *getTextEditRevenu();
+        QTextEdit *getTextEditTypeRevenu();
         QPushButton *getBtnValide();
         QFrame *getFrame();
 
@@ -22,12 +23,14 @@ class NvBudgetView {
         QLabel *labelPage;
         QLabel *labelDateDebut;
         QLabel *labelDateFin;
-        QLabel *labelMontant;
+        QLabel *labelRevenu;
+        QLabel *labelLibelleRevenu;
         QComboBox *comboBoxJourDebut;
         QComboBox *comboBoxJourFin;
         QComboBox *comboBoxMoisDebut;
         QComboBox *comboBoxMoisFin;
-        QTextEdit *textEditMontant;
+        QTextEdit *textEditRevenu;
+        QTextEdit *textEditTypeRevenu;
         QPushButton *btnValide;
         QFrame *frame;
         QGridLayout *layout;

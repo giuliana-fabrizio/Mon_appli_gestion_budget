@@ -9,32 +9,18 @@
 class Utilisateur {
 
     public:
-        Utilisateur(Date date_naissance, std::string nom_user, std::string passwd,
-                    std::string prenom_user,
-                    std::string username);
-        bool connexion(std::string username, std::string passwd);
-        void ajouterBudget(Date date_debut, Date date_fin, double montant);
-        void ajouterDepense(Date date, double montant, std::string description,
-                            std::string category);
-        std::vector<Depense> listerHistoriqueDepense(Date date_debut, Date date_fin);
-        void modifierProfil(Date date_naissance, std::string nom, std::string prenom,
-                            std::string username);
-        Date getDateNaissance();
-        std::string getNomUser();
-        std::string getPasswd();
-        std::string getPrenomUser();
-        std::string getUsername();
+        Utilisateur();
+        void ajouterBudget(Date debut, Date fin, Revenu revenu);
+        void ajouterDepense(Date date, double montant, std::string description, int id_enveloppe);
         std::vector<Budget> getHistoriqueBudget();
-        std::vector<Depense> getHistoriqueDepense();
+        Budget getLastBudget();
 
     private:
-        Date date_naissance;
-        std::string nom_user;
-        std::string passwd;
-        std::string prenom_user;
-        std::string username;
+        std::vector<std::string> autres_depenses_predefinies;
+        std::vector<std::string> depenses_fixes_predefinies;
+        std::vector<std::string> depenses_variables_predefinies;
+
         std::vector<Budget> historique_budget;
-        std::vector<Depense> historique_depense;
 };
 
 #endif

@@ -2,7 +2,7 @@
 
 Model::Model(Utilisateur *user) {
     this->user = user;
-    listCategories = {"abonnements", "alimentaire", "logement", "santé", "sorties-voyage", "transports", "vêtements", "autres"};
+    listCategories = {"abonnements", "courses", "logement", "santé", "sorties-voyage", "transports", "vêtements", "autres"};
 }
 
 Utilisateur* Model::getUser() {
@@ -18,14 +18,14 @@ int Model::getIndex(std::string var, std::vector<std::string> vecteur) {
     return pos;
 }
 
-std::vector<double> Model::listerHistoriqueDepenseParCategory(Date debut, Date fin) {
-    std::vector<double> list;
+// std::vector<double> Model::listerHistoriqueDepenseParCategory(Date debut, Date fin) {
+//     std::vector<double> list;
 
-    for (int i = 0; i < (int)listCategories.size(); i += 1) list[i] = 0;
+//     for (int i = 0; i < (int)listCategories.size(); i += 1) list[i] = 0;
 
-    for (Depense depense : user->listerHistoriqueDepense(debut, fin)) {
-        list[getIndex(depense.category, listCategories)] += depense.montant_depense;
-    }
+//     for (Depense depense : user->listerHistoriqueDepense(debut, fin)) {
+//         list[getIndex(depense.category, listCategories)] += depense.montant_depense;
+//     }
 
-    return list;
-}
+//     return list;
+// }
