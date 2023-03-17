@@ -1,31 +1,28 @@
 #include "../Fichiers_hpp/utilisateur_model.hpp"
 
 
-Utilisateur::Utilisateur() {
-    autres_depenses_predefinies = {"Cadeaux", "Voyage"};
-    depenses_fixes_predefinies = {"Logement", "Impot sur le revenu", "Assurance auto", "Assurance logement", "Tel. mobile", "Internet"};
-    depenses_variables_predefinies = {"Courses", "Habillement", "Divers"};
-}
+Utilisateur::Utilisateur() {}
 
-void Utilisateur::ajouterBudget(Date debut, Date fin, Revenu revenu) {
+void Utilisateur::ajouterBudget(Date debut, Date fin, std::vector<double> prevision_dps_fixes, std::vector<double> prevision_dps_variables, std::vector<double> prevision_autres_dps, std::vector<Revenu> revenu_dispo) {
     Budget budget = {debut, fin};
 
-    for (std::string s: autres_depenses_predefinies) {
-        Enveloppe enveloppe = {0, s};
+    for (int i = 0; i < (int) Model::getAutresDepensesPredefinies().size(); i += 1) {
+        Enveloppe enveloppe = {prevision_autres_dps[i], Model::getAutresDepensesPredefinies()[i]};
         budget.autres_depenses.push_back(enveloppe);
     }
 
-    for (std::string s: depenses_fixes_predefinies) {
-        Enveloppe enveloppe = {0, s};
+    for (int i = 0; i < (int) Model::getDepensesFixesPredefinies().size(); i += 1) {
+        Enveloppe enveloppe = {prevision_dps_fixes[i], Model::getDepensesFixesPredefinies()[i]};
         budget.depenses_fixes.push_back(enveloppe);
     }
 
-    for (std::string s: depenses_variables_predefinies) {
-        Enveloppe enveloppe = {0, s};
+    for (int i = 0; i < (int) Model::getDepensesVariablesPredefinies().size(); i += 1) {
+        Enveloppe enveloppe = {prevision_dps_variables[i], Model::getDepensesVariablesPredefinies()[i]};
         budget.depenses_variables.push_back(enveloppe);
     }
 
-    budget.list_revenus.push_back(revenu);
+    for (Revenu revenu : revenu_dispo) budget.list_revenus.push_back(revenu);
+
     historique_budget.push_back(budget);
 }
 

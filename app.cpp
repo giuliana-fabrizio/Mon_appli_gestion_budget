@@ -14,13 +14,22 @@ int main(int argc, char **argv) {
     std::string description = "Ours en peluche pour Jerémy";
 
     Utilisateur *user = new Utilisateur();
-    user->ajouterBudget(debutBudG, finBudG, revenu);
+    std::vector<Revenu> list_revenu;
+    std::vector<double> prevision_dps_fixes;
+    std::vector<double> prevision_dps_variables;
+    std::vector<double> prevision_autres_dps;
+
+    list_revenu.push_back(revenu);
+    prevision_dps_fixes.push_back(montant);
+    prevision_dps_variables.push_back(montant);
+    prevision_autres_dps.push_back(montant);
+
+    user->ajouterBudget(debutBudG, finBudG, prevision_dps_fixes, prevision_dps_variables, prevision_autres_dps, list_revenu);
+    user->ajouterDepense(depense, montant, description, 0);
     user->ajouterDepense(depense, montant, description, 0);
 
-
-    Model *model = new Model(user);
-    View *view = new View(model);
-    Controller *controller = new Controller(model, view);
+    View *view = new View(user);
+    Controller *controller = new Controller(user, view);
 
     return app.exec();
 }

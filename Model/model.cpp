@@ -1,13 +1,6 @@
 #include "../Fichiers_hpp/model.hpp"
 
-Model::Model(Utilisateur *user) {
-    this->user = user;
-    listCategories = {"abonnements", "courses", "logement", "santé", "sorties-voyage", "transports", "vêtements", "autres"};
-}
-
-Utilisateur* Model::getUser() {
-    return user;
-}
+Model::Model() {}
 
 int Model::getIndex(std::string var, std::vector<std::string> vecteur) {
     int pos = 0;
@@ -16,6 +9,21 @@ int Model::getIndex(std::string var, std::vector<std::string> vecteur) {
         pos += 1;
     }
     return pos;
+}
+
+std::vector<std::string> Model::getAutresDepensesPredefinies() {
+    std::vector<std::string> autres_depenses_predefinies = {"Cadeaux", "Voyage"};
+    return autres_depenses_predefinies;
+}
+
+std::vector<std::string> Model::getDepensesFixesPredefinies() {
+    std::vector<std::string> depenses_fixes_predefinies = {"Logement", "Impot sur le revenu", "Assurance auto", "Assurance logement", "Tel. mobile", "Internet"};
+    return depenses_fixes_predefinies;
+}
+
+std::vector<std::string> Model::getDepensesVariablesPredefinies() {
+    std::vector<std::string> depenses_variables_predefinies = {"Courses", "Habillement", "Divers"};
+    return depenses_variables_predefinies;
 }
 
 // std::vector<double> Model::listerHistoriqueDepenseParCategory(Date debut, Date fin) {

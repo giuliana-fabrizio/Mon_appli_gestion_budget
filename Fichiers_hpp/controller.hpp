@@ -1,7 +1,8 @@
 #ifndef CONTROLLER_HPP
 #define CONTROLLER_HPP
 
-#include "model.hpp"
+#include "utilisateur_model.hpp"
+#include "structure_model.hpp"
 #include "view.hpp"
 
 #include "structure_model.hpp"
@@ -9,13 +10,13 @@
 class Controller {
 
     public:
-        Controller(Model *model, View *view);
+        Controller(Utilisateur *user, View *view);
         void connect();
         void changePage(int nb);
         void addBudget();
 
     private:
-        Model *model;
+        Utilisateur *user;
         View *view;
 };
 

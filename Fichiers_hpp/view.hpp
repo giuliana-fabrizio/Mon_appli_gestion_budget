@@ -3,7 +3,7 @@
 
 #include "accueil_view.hpp"
 #include "menu.hpp"
-#include "model.hpp"
+#include "utilisateur_model.hpp"
 #include "nv_budget_view.hpp"
 
 #include <iostream>
@@ -12,16 +12,17 @@
 class View {
 
     public:
-        View(Model *model);
+        View(Utilisateur *user);
         void setStyle();
         void addWidget();
         void addToScene(int nb);
         Menu *getMenu();
+        AccueilView *getAccueilView();
         NvBudgetView *getNvBudgetView();
 
     private:
         Menu *menu;
-        Model *model;
+        Utilisateur *user;
         AccueilView *accueilView;
         NvBudgetView *nvBudgetView;
         QStackedWidget *stackedWidget;

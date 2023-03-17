@@ -2,16 +2,17 @@
 #define MODEL_HPP
 
 #include <iostream>
-#include "utilisateur_model.hpp"
+#include <vector>
 
 class Model {
+
     public:
-        Model(Utilisateur *user);
-        Utilisateur *getUser();
+        Model();
+        static std::vector<std::string> getAutresDepensesPredefinies();
+        static std::vector<std::string> getDepensesFixesPredefinies();
+        static std::vector<std::string> getDepensesVariablesPredefinies();
 
     protected:
-        Utilisateur *user;
-        std::vector<std::string> listCategories;
         int getIndex(std::string var, std::vector<std::string>);
         // std::vector<double> listerHistoriqueDepenseParCategory(Date debut, Date fin);
 };

@@ -5,19 +5,28 @@ NvBudgetView::NvBudgetView() {
     labelPage = new QLabel("Définir un nouveau budget");
     labelDateDebut = new QLabel("Date de début :");
     labelDateFin = new QLabel("Date de fin :");
-    labelRevenu = new QLabel("Saisir un revenu :");
-    labelLibelleRevenu = new QLabel("Saisir le type revenu :");
+    labelPrevoir = new QLabel("Prevoyez vos enveloppe");
+    // QLabel *labelAnnee = new QLabel(QString::number(annee_courante));
 
     comboBoxJourDebut = new QComboBox();
     comboBoxJourFin = new QComboBox();
     comboBoxMoisDebut = new QComboBox();
     comboBoxMoisFin = new QComboBox();
 
-    // QLabel *labelAnnee = new QLabel(QString::number(annee_courante));
+    validator = new QDoubleValidator();
 
-    textEditRevenu = new QTextEdit();
+    tableWidget_revenus = new QTableWidget(5, 2);
+    tableWidget_depenses_fixes = new QTableWidget(Model::getDepensesFixesPredefinies().size(), 2);
+    tableWidget_depenses_variables = new QTableWidget(Model::getDepensesVariablesPredefinies().size(), 2);
+    tableWidget_autres_depenses = new QTableWidget(Model::getAutresDepensesPredefinies().size(), 2);
+
     btnValide = new QPushButton("Valider");
     frame = new QFrame();
+
+    hBoxDateDebut = new QHBoxLayout();
+    hBoxDateFin = new QHBoxLayout();
+    hBoxTablesWidget = new QHBoxLayout();
+
     layout = new QGridLayout(frame);
 
     init();
@@ -26,6 +35,8 @@ NvBudgetView::NvBudgetView() {
 }
 
 void NvBudgetView::init() {
+    int cpt = 0;
+
     for (int i = 1; i <= 31; i += 1) {
         comboBoxJourDebut->addItem(QString::number(i));
         comboBoxJourFin->addItem(QString::number(i));
@@ -34,6 +45,40 @@ void NvBudgetView::init() {
             comboBoxMoisFin->addItem(QString::number(i));
         }
     }
+
+    for (int i = 0; i < 5; i += 1) {
+        tableWidget_revenus->setCellWidget(i, 0, new QLineEdit());
+        lineText = new QLineEdit();
+        lineText->setValidator(validator);
+        tableWidget_revenus->setCellWidget(i, 1, lineText);
+    }
+
+    for (std::string s: Model::getDepensesFixesPredefinies()) {
+        tableWidget_depenses_fixes->setCellWidget(cpt, 0, new QLabel(QString::fromStdString(s)));
+        lineText = new QLineEdit();
+        lineText->setValidator(validator);
+        tableWidget_depenses_fixes->setCellWidget(cpt, 1, lineText);
+
+        cpt += 1;
+    }
+
+    cpt = 0;
+    for (std::string s: Model::getDepensesVariablesPredefinies()) {
+        tableWidget_depenses_variables->setCellWidget(cpt, 0, new QLabel(QString::fromStdString(s)));
+        lineText = new QLineEdit();
+        lineText->setValidator(validator);
+        tableWidget_depenses_variables->setCellWidget(cpt, 1, lineText);
+        cpt += 1;
+    }
+
+    cpt = 0;
+    for (std::string s: Model::getAutresDepensesPredefinies()) {
+        tableWidget_autres_depenses->setCellWidget(cpt, 0, new QLabel(QString::fromStdString(s)));
+        lineText = new QLineEdit();
+        lineText->setValidator(validator);
+        tableWidget_autres_depenses->setCellWidget(cpt, 1, lineText);
+        cpt += 1;
+    }
 }
 
 void NvBudgetView::setStyle() {
@@ -41,19 +86,24 @@ void NvBudgetView::setStyle() {
 }
 
 void NvBudgetView::addToWindow() {
+    hBoxDateDebut->addWidget(labelDateDebut);
+    hBoxDateDebut->addWidget(comboBoxJourDebut);
+    hBoxDateDebut->addWidget(comboBoxMoisDebut);
+
+    hBoxDateFin->addWidget(labelDateFin);
+    hBoxDateFin->addWidget(comboBoxJourFin);
+    hBoxDateFin->addWidget(comboBoxMoisFin);
+
+    hBoxTablesWidget->addWidget(tableWidget_revenus);
+    hBoxTablesWidget->addWidget(tableWidget_depenses_fixes);
+    hBoxTablesWidget->addWidget(tableWidget_depenses_variables);
+    hBoxTablesWidget->addWidget(tableWidget_autres_depenses);
+
     layout->addWidget(labelPage, 0, 0);
-    layout->addWidget(labelDateDebut, 1, 0);
-    layout->addWidget(comboBoxJourDebut, 1, 1);
-    layout->addWidget(comboBoxMoisDebut, 1, 2);
-    // layout->addWidget(labelAnnee, 1, 3);
-    layout->addWidget(labelDateFin, 2, 0);
-    layout->addWidget(comboBoxJourFin, 2, 1);
-    layout->addWidget(comboBoxMoisFin, 2, 2);
-    // layout->addWidget(labelAnnee, 2, 3);
-    layout->addWidget(labelRevenu, 3, 0);
-    layout->addWidget(textEditRevenu, 3, 1);
-    layout->addWidget(labelLibelleRevenu, 4, 0);
-    layout->addWidget(textEditTypeRevenu, 4, 1);
+    layout->addLayout(hBoxDateDebut, 1, 0);
+    layout->addLayout(hBoxDateFin, 2, 0);
+    layout->addWidget(labelPrevoir, 3, 0);
+    layout->addLayout(hBoxTablesWidget, 4, 0);
     layout->addWidget(btnValide, 5, 0);
 }
 
@@ -73,12 +123,20 @@ QComboBox* NvBudgetView::getComboBoxMoisFin() {
     return comboBoxMoisFin;
 }
 
-QTextEdit* NvBudgetView::getTextEditRevenu() {
-    return textEditRevenu;
+QTableWidget* NvBudgetView::getTableWidgetRevenus() {
+    return tableWidget_revenus;
 }
 
-QTextEdit* NvBudgetView::getTextEditTypeRevenu() {
-    return textEditTypeRevenu;
+QTableWidget* NvBudgetView::getTableWidgetDepensesFixes() {
+    return tableWidget_depenses_fixes;
+}
+
+QTableWidget* NvBudgetView::getTableWidgetDepensesVariables() {
+    return tableWidget_depenses_variables;
+}
+
+QTableWidget* NvBudgetView::getTableWidgetAutresDepenses() {
+    return tableWidget_autres_depenses;
 }
 
 QPushButton *NvBudgetView::getBtnValide() {

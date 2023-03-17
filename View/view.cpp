@@ -2,10 +2,10 @@
 
 # include <iostream>
 
-View::View(Model *model) {
-    this->model = model;
+View::View(Utilisateur *user) {
+    this->user = user;
     menu = new Menu();
-    accueilView = new AccueilView(model);
+    accueilView = new AccueilView(user);
     nvBudgetView = new NvBudgetView();
     stackedWidget = new QStackedWidget(&window);
     vBoxLayout = new QVBoxLayout();
@@ -55,6 +55,14 @@ Menu* View::getMenu() {
     return menu;
 }
 
+AccueilView* View::getAccueilView() {
+    return accueilView;
+}
+
 NvBudgetView* View::getNvBudgetView() {
     return nvBudgetView;
 }
+
+// void View::setStackedWidget(int i) {
+    
+// }
