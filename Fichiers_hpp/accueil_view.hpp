@@ -4,6 +4,7 @@
 #include <QtCharts>
 #include <QtWidgets>
 
+#include "data.hpp"
 #include "utilisateur_model.hpp"
 
 class AccueilView {

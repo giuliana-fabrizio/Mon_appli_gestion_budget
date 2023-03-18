@@ -5,11 +5,11 @@ AccueilView::AccueilView(Utilisateur *user) {
     this->user = user;
 
     labelDateBudget = new QLabel("Début : - Fin : " /* + user->getHistoriqueBudget().size()-1].date_debut.toString() */ /* + user->getHistoriqueBudget().size()-1].date_fin.toString() */);
-    labelRevenu = new QLabel("Revenus");
-    labelFixes = new QLabel("Dépenses fixes");
-    labelVariables = new QLabel("Dépenses variables");
-    labelAutres = new QLabel("Autres dépenses");
-    
+    labelRevenu = new QLabel(QString::fromStdString(Data::composants_budget[0]));
+    labelFixes = new QLabel(QString::fromStdString(Data::composants_budget[1]));
+    labelVariables = new QLabel(QString::fromStdString(Data::composants_budget[2]));
+    labelAutres = new QLabel(QString::fromStdString(Data::composants_budget[3]));
+
     pgBarDepense = new QProgressBar();
 
     valeurs_depenses_fixes = new QPieSeries();
@@ -60,8 +60,6 @@ void AccueilView::init() {
 
         cpt += 1;
     }
-    chart_depenses_fixes->addSeries(valeurs_depenses_fixes);
-    chart_depenses_fixes->setTitle("Détail de mes dépenses fixes");
 
     // ====================================================================================================== graph depenses_variables
     cpt = 0;
@@ -78,8 +76,6 @@ void AccueilView::init() {
 
         cpt += 1;
     }
-    chart_depenses_variables->addSeries(valeurs_depenses_variables);
-    chart_depenses_variables->setTitle("Détail de mes dépenses variables");
 
     // ====================================================================================================== graph autres_depenses
     cpt = 0;
@@ -96,8 +92,6 @@ void AccueilView::init() {
 
         cpt += 1;
     }
-    chart_autres_depenses->addSeries(valeurs_autres_depenses);
-    chart_autres_depenses->setTitle("Détail de mes autres dépenses");
 
     // ====================================================================================================== a propos des revenus
     cpt = 0;
@@ -129,6 +123,14 @@ void AccueilView::setStyle() {
 }
 
 void AccueilView::addToWindow() {
+
+    chart_depenses_fixes->addSeries(valeurs_depenses_fixes);
+    chart_depenses_variables->addSeries(valeurs_depenses_variables);
+    chart_autres_depenses->addSeries(valeurs_autres_depenses);
+
+    chart_depenses_fixes->setTitle("Détail de mes dépenses");
+    chart_depenses_variables->setTitle("Détail de mes dépenses");
+    chart_autres_depenses->setTitle("Détail de mes dépenses");
 
     hBox_revenus->addWidget(labelRevenu);
     hBox_revenus->addWidget(pgBarDepense);

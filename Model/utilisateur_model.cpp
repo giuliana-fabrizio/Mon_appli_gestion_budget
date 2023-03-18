@@ -6,18 +6,18 @@ Utilisateur::Utilisateur() {}
 void Utilisateur::ajouterBudget(Date debut, Date fin, std::vector<double> prevision_dps_fixes, std::vector<double> prevision_dps_variables, std::vector<double> prevision_autres_dps, std::vector<Revenu> revenu_dispo) {
     Budget budget = {debut, fin};
 
-    for (int i = 0; i < (int) Model::getAutresDepensesPredefinies().size(); i += 1) {
-        Enveloppe enveloppe = {prevision_autres_dps[i], Model::getAutresDepensesPredefinies()[i]};
+    for (int i = 0; i < (int) Data::autres_depenses_predefinies.size(); i += 1) {
+        Enveloppe enveloppe = {prevision_autres_dps[i], Data::autres_depenses_predefinies[i]};
         budget.autres_depenses.push_back(enveloppe);
     }
 
-    for (int i = 0; i < (int) Model::getDepensesFixesPredefinies().size(); i += 1) {
-        Enveloppe enveloppe = {prevision_dps_fixes[i], Model::getDepensesFixesPredefinies()[i]};
+    for (int i = 0; i < (int) Data::depenses_fixes_predefinies.size(); i += 1) {
+        Enveloppe enveloppe = {prevision_dps_fixes[i], Data::depenses_fixes_predefinies[i]};
         budget.depenses_fixes.push_back(enveloppe);
     }
 
-    for (int i = 0; i < (int) Model::getDepensesVariablesPredefinies().size(); i += 1) {
-        Enveloppe enveloppe = {prevision_dps_variables[i], Model::getDepensesVariablesPredefinies()[i]};
+    for (int i = 0; i < (int) Data::depenses_variables_predefinies.size(); i += 1) {
+        Enveloppe enveloppe = {prevision_dps_variables[i], Data::depenses_variables_predefinies[i]};
         budget.depenses_variables.push_back(enveloppe);
     }
 
@@ -26,9 +26,22 @@ void Utilisateur::ajouterBudget(Date debut, Date fin, std::vector<double> previs
     historique_budget.push_back(budget);
 }
 
-void Utilisateur::ajouterDepense(Date date, double montant, std::string description, int id_enveloppe) {
+void Utilisateur::ajouterDepense(Date date, double montant, std::string description, int id_categorie, int id_enveloppe) {
     Depense depense = {date, montant, description};
-    historique_budget[historique_budget.size()-1].autres_depenses[id_enveloppe].list_depense.push_back(depense);
+
+    switch (id_categorie) {
+        default:
+            historique_budget[historique_budget.size()-1].depenses_fixes[id_enveloppe].list_depense.push_back(depense);
+            break;
+
+        case 1:
+            historique_budget[historique_budget.size()-1].depenses_variables[id_enveloppe].list_depense.push_back(depense);
+            break;
+
+        case 2:
+            historique_budget[historique_budget.size()-1].autres_depenses[id_enveloppe].list_depense.push_back(depense);
+            break;
+    }
 }
 
 std::vector<Budget> Utilisateur::getHistoriqueBudget() {

@@ -1,9 +1,9 @@
-#ifndef NvBudget_View_HPP
-#define NvBudget_View_HPP
+#ifndef NV_BUDGET_VIEW_HPP
+#define NV_BUDGET_VIEW_HPP
 
 #include <QtWidgets>
 
-#include "model.hpp"
+#include "data.hpp"
 
 class NvBudgetView {
 
@@ -24,6 +24,7 @@ class NvBudgetView {
         QTableWidget* getTableWidgetAutresDepenses();
 
         QPushButton *getBtnValide();
+
         QFrame *getFrame();
 
     private:
@@ -37,7 +38,7 @@ class NvBudgetView {
         QComboBox *comboBoxMoisDebut;
         QComboBox *comboBoxMoisFin;
 
-        QDoubleValidator *validator;
+        QDoubleValidator *validateur;
         QLineEdit *lineText;
 
         QTableWidget *tableWidget_revenus;
@@ -46,12 +47,12 @@ class NvBudgetView {
         QTableWidget *tableWidget_autres_depenses;
 
         QPushButton *btnValide;
-        QFrame *frame;
 
         QHBoxLayout *hBoxDateDebut;
         QHBoxLayout *hBoxDateFin;
         QHBoxLayout *hBoxTablesWidget;
 
+        QFrame *frame;
         QGridLayout *layout;
 };
 

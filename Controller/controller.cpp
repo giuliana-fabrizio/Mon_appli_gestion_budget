@@ -25,6 +25,13 @@ void Controller::connect() {
     QObject::connect(view->getNvBudgetView()->getBtnValide(), &QPushButton::clicked, [=]() {
         addBudget();
     });
+    QObject::connect(view->getNvleDepenseView()->getBtnValide(), &QPushButton::clicked, [=]() {
+        addDepense();
+    });
+
+    QObject::connect(view->getNvleDepenseView()->getComboBoxCategorieDepense(), QOverload<int>::of(&QComboBox::currentIndexChanged), [=]() {
+        donneInfos(view->getNvleDepenseView()->getComboBoxCategorieDepense()->currentIndex());
+    });
 }
 
 void Controller::changePage(int nb) {
@@ -74,6 +81,30 @@ void Controller::addBudget() {
     }
 
     user->ajouterBudget(debut, fin, prevision_dps_fixes, prevision_dps_variables, prevision_autres_dps, revenu_dispos);
+
+    view->getAccueilView()->clearAll();
+    view->getAccueilView()->init();
+    changePage(1);
+}
+
+void Controller::donneInfos(int index) {
+    view->getNvleDepenseView()->initComboBoxEnveloppe(index);
+}
+
+void Controller::addDepense() {
+    int jour = view->getNvleDepenseView()->getComboBoxJour()->currentIndex() + 1;
+    int mois = view->getNvleDepenseView()->getComboBoxMois()->currentIndex() + 1;
+    int annee = 2023;
+    Date date = {jour, mois, annee};
+
+    int id_categorie = view->getNvleDepenseView()->getComboBoxCategorieDepense()->currentIndex();
+    int id_enveloppe = view->getNvleDepenseView()->getComboBoxEnveloppe()->currentIndex();
+
+    double montant = view->getNvleDepenseView()->getLineEditMontant()->text().toDouble();
+
+    std::string description = view->getNvleDepenseView()->getLineEditDescription()->text().toStdString();
+
+    user->ajouterDepense(date, montant, description, id_categorie, id_enveloppe);
 
     view->getAccueilView()->clearAll();
     view->getAccueilView()->init();

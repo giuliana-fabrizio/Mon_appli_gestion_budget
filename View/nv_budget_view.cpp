@@ -13,20 +13,20 @@ NvBudgetView::NvBudgetView() {
     comboBoxMoisDebut = new QComboBox();
     comboBoxMoisFin = new QComboBox();
 
-    validator = new QDoubleValidator();
+    validateur = new QDoubleValidator();
 
     tableWidget_revenus = new QTableWidget(5, 2);
-    tableWidget_depenses_fixes = new QTableWidget(Model::getDepensesFixesPredefinies().size(), 2);
-    tableWidget_depenses_variables = new QTableWidget(Model::getDepensesVariablesPredefinies().size(), 2);
-    tableWidget_autres_depenses = new QTableWidget(Model::getAutresDepensesPredefinies().size(), 2);
+    tableWidget_depenses_fixes = new QTableWidget(Data::depenses_fixes_predefinies.size(), 2);
+    tableWidget_depenses_variables = new QTableWidget(Data::depenses_variables_predefinies.size(), 2);
+    tableWidget_autres_depenses = new QTableWidget(Data::autres_depenses_predefinies.size(), 2);
 
     btnValide = new QPushButton("Valider");
-    frame = new QFrame();
 
     hBoxDateDebut = new QHBoxLayout();
     hBoxDateFin = new QHBoxLayout();
     hBoxTablesWidget = new QHBoxLayout();
 
+    frame = new QFrame();
     layout = new QGridLayout(frame);
 
     init();
@@ -49,33 +49,33 @@ void NvBudgetView::init() {
     for (int i = 0; i < 5; i += 1) {
         tableWidget_revenus->setCellWidget(i, 0, new QLineEdit());
         lineText = new QLineEdit();
-        lineText->setValidator(validator);
+        lineText->setValidator(validateur);
         tableWidget_revenus->setCellWidget(i, 1, lineText);
     }
 
-    for (std::string s: Model::getDepensesFixesPredefinies()) {
+    for (std::string s: Data::depenses_fixes_predefinies) {
         tableWidget_depenses_fixes->setCellWidget(cpt, 0, new QLabel(QString::fromStdString(s)));
         lineText = new QLineEdit();
-        lineText->setValidator(validator);
+        lineText->setValidator(validateur);
         tableWidget_depenses_fixes->setCellWidget(cpt, 1, lineText);
 
         cpt += 1;
     }
 
     cpt = 0;
-    for (std::string s: Model::getDepensesVariablesPredefinies()) {
+    for (std::string s: Data::depenses_variables_predefinies) {
         tableWidget_depenses_variables->setCellWidget(cpt, 0, new QLabel(QString::fromStdString(s)));
         lineText = new QLineEdit();
-        lineText->setValidator(validator);
+        lineText->setValidator(validateur);
         tableWidget_depenses_variables->setCellWidget(cpt, 1, lineText);
         cpt += 1;
     }
 
     cpt = 0;
-    for (std::string s: Model::getAutresDepensesPredefinies()) {
+    for (std::string s: Data::autres_depenses_predefinies) {
         tableWidget_autres_depenses->setCellWidget(cpt, 0, new QLabel(QString::fromStdString(s)));
         lineText = new QLineEdit();
-        lineText->setValidator(validator);
+        lineText->setValidator(validateur);
         tableWidget_autres_depenses->setCellWidget(cpt, 1, lineText);
         cpt += 1;
     }

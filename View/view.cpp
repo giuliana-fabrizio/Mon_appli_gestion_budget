@@ -1,12 +1,12 @@
 #include "../Fichiers_hpp/view.hpp"
 
-# include <iostream>
 
 View::View(Utilisateur *user) {
     this->user = user;
     menu = new Menu();
     accueilView = new AccueilView(user);
     nvBudgetView = new NvBudgetView();
+    nvleDepenseView = new NvleDepenseView();
     stackedWidget = new QStackedWidget(&window);
     vBoxLayout = new QVBoxLayout();
     setStyle();
@@ -27,6 +27,7 @@ void View::setStyle() {
 void View::addWidget() {
     stackedWidget->addWidget(accueilView->getFrame());
     stackedWidget->addWidget(nvBudgetView->getFrame());
+    stackedWidget->addWidget(nvleDepenseView->getFrame());
 
     vBoxLayout->addWidget(menu->getMenuBar());
     vBoxLayout->addWidget(stackedWidget);
@@ -43,7 +44,7 @@ void View::addToScene(int nb) {
             stackedWidget->setCurrentIndex(1);
             break;
         case 3:
-            // stackedWidget->setCurrentIndex(2);
+            stackedWidget->setCurrentIndex(2);
             break;
         case 4:
             // stackedWidget->setCurrentIndex(3);
@@ -63,6 +64,6 @@ NvBudgetView* View::getNvBudgetView() {
     return nvBudgetView;
 }
 
-// void View::setStackedWidget(int i) {
-    
-// }
+NvleDepenseView* View::getNvleDepenseView() {
+    return nvleDepenseView;
+}

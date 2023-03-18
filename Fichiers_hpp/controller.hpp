@@ -14,6 +14,8 @@ class Controller {
         void connect();
         void changePage(int nb);
         void addBudget();
+        void donneInfos(int index);
+        void addDepense();
 
     private:
         Utilisateur *user;

@@ -54,21 +54,23 @@ OBJECTS_DIR   = ./
 
 SOURCES       = app.cpp \
 		Controller/controller.cpp \
-		Model/model.cpp \
+		Data/data.cpp \
 		Model/structure_model.cpp \
 		Model/utilisateur_model.cpp \
 		View/accueil_view.cpp \
 		View/menu.cpp \
 		View/nv_budget_view.cpp \
+		View/nvle_depense_view.cpp \
 		View/view.cpp 
 OBJECTS       = app.o \
 		controller.o \
-		model.o \
+		data.o \
 		structure_model.o \
 		utilisateur_model.o \
 		accueil_view.o \
 		menu.o \
 		nv_budget_view.o \
+		nvle_depense_view.o \
 		view.o
 DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/unix.conf \
@@ -150,12 +152,13 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/lex.prf \
 		projet.pro  app.cpp \
 		Controller/controller.cpp \
-		Model/model.cpp \
+		Data/data.cpp \
 		Model/structure_model.cpp \
 		Model/utilisateur_model.cpp \
 		View/accueil_view.cpp \
 		View/menu.cpp \
 		View/nv_budget_view.cpp \
+		View/nvle_depense_view.cpp \
 		View/view.cpp
 QMAKE_TARGET  = app
 DESTDIR       = 
@@ -342,7 +345,7 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents app.cpp Controller/controller.cpp Model/model.cpp Model/structure_model.cpp Model/utilisateur_model.cpp View/accueil_view.cpp View/menu.cpp View/nv_budget_view.cpp View/view.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents app.cpp Controller/controller.cpp Data/data.cpp Model/structure_model.cpp Model/utilisateur_model.cpp View/accueil_view.cpp View/menu.cpp View/nv_budget_view.cpp View/nvle_depense_view.cpp View/view.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -394,56 +397,62 @@ compiler_clean: compiler_moc_predefs_clean
 
 app.o: app.cpp Fichiers_hpp/global.hpp \
 		Fichiers_hpp/accueil_view.hpp \
-		Fichiers_hpp/model.hpp \
 		Fichiers_hpp/utilisateur_model.hpp \
+		Fichiers_hpp/data.hpp \
 		Fichiers_hpp/structure_model.hpp \
 		Fichiers_hpp/controller.hpp \
 		Fichiers_hpp/view.hpp \
 		Fichiers_hpp/menu.hpp \
-		Fichiers_hpp/nv_budget_view.hpp
+		Fichiers_hpp/nv_budget_view.hpp \
+		Fichiers_hpp/nvle_depense_view.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o app.o app.cpp
 
 controller.o: Controller/controller.cpp Fichiers_hpp/controller.hpp \
-		Fichiers_hpp/model.hpp \
 		Fichiers_hpp/utilisateur_model.hpp \
+		Fichiers_hpp/data.hpp \
 		Fichiers_hpp/structure_model.hpp \
 		Fichiers_hpp/view.hpp \
 		Fichiers_hpp/accueil_view.hpp \
 		Fichiers_hpp/menu.hpp \
-		Fichiers_hpp/nv_budget_view.hpp
+		Fichiers_hpp/nv_budget_view.hpp \
+		Fichiers_hpp/nvle_depense_view.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o controller.o Controller/controller.cpp
 
-model.o: Model/model.cpp Fichiers_hpp/model.hpp \
-		Fichiers_hpp/utilisateur_model.hpp \
-		Fichiers_hpp/structure_model.hpp
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o model.o Model/model.cpp
+data.o: Data/data.cpp Fichiers_hpp/data.hpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o data.o Data/data.cpp
 
 structure_model.o: Model/structure_model.cpp Fichiers_hpp/structure_model.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o structure_model.o Model/structure_model.cpp
 
 utilisateur_model.o: Model/utilisateur_model.cpp Fichiers_hpp/utilisateur_model.hpp \
+		Fichiers_hpp/data.hpp \
 		Fichiers_hpp/structure_model.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o utilisateur_model.o Model/utilisateur_model.cpp
 
 accueil_view.o: View/accueil_view.cpp Fichiers_hpp/accueil_view.hpp \
-		Fichiers_hpp/model.hpp \
 		Fichiers_hpp/utilisateur_model.hpp \
+		Fichiers_hpp/data.hpp \
 		Fichiers_hpp/structure_model.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o accueil_view.o View/accueil_view.cpp
 
 menu.o: View/menu.cpp Fichiers_hpp/menu.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o menu.o View/menu.cpp
 
-nv_budget_view.o: View/nv_budget_view.cpp Fichiers_hpp/nv_budget_view.hpp
+nv_budget_view.o: View/nv_budget_view.cpp Fichiers_hpp/nv_budget_view.hpp \
+		Fichiers_hpp/data.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o nv_budget_view.o View/nv_budget_view.cpp
+
+nvle_depense_view.o: View/nvle_depense_view.cpp Fichiers_hpp/nvle_depense_view.hpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o nvle_depense_view.o View/nvle_depense_view.cpp
 
 view.o: View/view.cpp Fichiers_hpp/view.hpp \
 		Fichiers_hpp/accueil_view.hpp \
-		Fichiers_hpp/model.hpp \
 		Fichiers_hpp/utilisateur_model.hpp \
+		Fichiers_hpp/data.hpp \
 		Fichiers_hpp/structure_model.hpp \
 		Fichiers_hpp/menu.hpp \
-		Fichiers_hpp/nv_budget_view.hpp
+		Fichiers_hpp/nv_budget_view.hpp \
+		Fichiers_hpp/nvle_depense_view.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o view.o View/view.cpp
 
 ####### Install

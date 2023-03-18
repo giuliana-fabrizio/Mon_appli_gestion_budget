@@ -25,8 +25,8 @@ int main(int argc, char **argv) {
     prevision_autres_dps.push_back(montant);
 
     user->ajouterBudget(debutBudG, finBudG, prevision_dps_fixes, prevision_dps_variables, prevision_autres_dps, list_revenu);
-    user->ajouterDepense(depense, montant, description, 0);
-    user->ajouterDepense(depense, montant, description, 0);
+    user->ajouterDepense(depense, montant, description, 1, 0);
+    user->ajouterDepense(depense, montant, description, 2, 0);
 
     View *view = new View(user);
     Controller *controller = new Controller(user, view);
