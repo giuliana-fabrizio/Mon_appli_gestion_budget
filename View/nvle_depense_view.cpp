@@ -1,6 +1,7 @@
 #include "../Fichiers_hpp/nvle_depense_view.hpp"
 
-NvleDepenseView::NvleDepenseView() {
+NvleDepenseView::NvleDepenseView()
+{
     labelPage = new QLabel("Ajouter une dépense");
     labelDateDepense = new QLabel("Date de votre dépense");
     labelMontantDepense = new QLabel("Montant dépensé");
@@ -10,6 +11,7 @@ NvleDepenseView::NvleDepenseView() {
 
     comboBoxJour = new QComboBox();
     comboBoxMois = new QComboBox();
+    comboBoxAnnee = new QComboBox();
     comboBoxCategorieDepense = new QComboBox();
     comboBoxEnveloppe = new QComboBox();
 
@@ -33,49 +35,65 @@ NvleDepenseView::NvleDepenseView() {
     addToWindow();
 }
 
-void NvleDepenseView::initPage() {
+void NvleDepenseView::initPage()
+{
 
-    for (int i = 1; i <= 31; i += 1) {
+    for (int i = 1; i <= 31; i += 1)
+    {
         comboBoxJour->addItem(QString::number(i));
-        if (i <= 12) comboBoxMois->addItem(QString::number(i));
+        if (i <= 12)
+            comboBoxMois->addItem(QString::number(i));
     }
 
-    for (int i = 1; i < Data::composants_budget.size(); i += 1)
+    for (int i = 2023; i <= 2023 + 1; i += 1)
+        comboBoxAnnee->addItem(QString::number(i));
+
+    for (int i = 1; i < (int)Data::composants_budget.size(); i += 1)
         comboBoxCategorieDepense->addItem(QString::fromStdString(Data::composants_budget[i]));
 
     lineEditMontant->setValidator(validateur);
 }
 
-void NvleDepenseView::initComboBoxEnveloppe(int nb) {
+void NvleDepenseView::initComboBoxEnveloppe(int nb)
+{
     comboBoxEnveloppe->clear();
     std::vector<std::string> list;
 
-    switch (nb) {
-        default:
-            list = Data::depenses_fixes_predefinies;
-            break;
+    switch (nb)
+    {
+    default:
+        list = Data::depenses_fixes_predefinies;
+        break;
 
-        case 1:
-            list = Data::depenses_variables_predefinies;
-            break;
+    case 1:
+        list = Data::depenses_variables_predefinies;
+        break;
 
-        case 2:
-            list = Data::autres_depenses_predefinies;
-            break;
+    case 2:
+        list = Data::autres_depenses_predefinies;
+        break;
     }
 
     for (std::string s : list)
         comboBoxEnveloppe->addItem(QString::fromStdString(s));
 }
 
-void NvleDepenseView::setStyle() {
-    btnValide->setGeometry(10, 10, 80, 30);
+void NvleDepenseView::setStyle()
+{
+    labelPage->setStyleSheet("QLabel { font: 18pt; font-weight: bold; }");
+    labelPage->setAlignment(Qt::AlignCenter);
+
+    hBoxCategorie->setSpacing(200);
+
+    btnValide->setStyleSheet("QPushButton {background: #c4ffdc;}");
 }
 
-void NvleDepenseView::addToWindow() {
+void NvleDepenseView::addToWindow()
+{
     hBoxDate->addWidget(labelDateDepense);
     hBoxDate->addWidget(comboBoxJour);
     hBoxDate->addWidget(comboBoxMois);
+    hBoxDate->addWidget(comboBoxAnnee);
 
     hBoxDescription->addWidget(labelDescriptionDepense);
     hBoxDescription->addWidget(lineEditDescription);
@@ -96,34 +114,47 @@ void NvleDepenseView::addToWindow() {
     layout->addWidget(btnValide, 5, 0);
 }
 
-QComboBox* NvleDepenseView::getComboBoxJour() {
+QComboBox *NvleDepenseView::getComboBoxJour()
+{
     return comboBoxJour;
 }
 
-QComboBox* NvleDepenseView::getComboBoxMois() {
+QComboBox *NvleDepenseView::getComboBoxMois()
+{
     return comboBoxMois;
 }
 
-QComboBox* NvleDepenseView::getComboBoxCategorieDepense() {
+QComboBox *NvleDepenseView::getComboBoxAnnee()
+{
+    return comboBoxAnnee;
+}
+
+QComboBox *NvleDepenseView::getComboBoxCategorieDepense()
+{
     return comboBoxCategorieDepense;
 }
 
-QComboBox* NvleDepenseView::getComboBoxEnveloppe() {
+QComboBox *NvleDepenseView::getComboBoxEnveloppe()
+{
     return comboBoxEnveloppe;
 }
 
-QLineEdit* NvleDepenseView::getLineEditDescription() {
+QLineEdit *NvleDepenseView::getLineEditDescription()
+{
     return lineEditDescription;
 }
 
-QLineEdit* NvleDepenseView::getLineEditMontant() {
+QLineEdit *NvleDepenseView::getLineEditMontant()
+{
     return lineEditMontant;
 }
 
-QPushButton* NvleDepenseView::getBtnValide() {
+QPushButton *NvleDepenseView::getBtnValide()
+{
     return btnValide;
 }
 
-QFrame* NvleDepenseView::getFrame() {
+QFrame *NvleDepenseView::getFrame()
+{
     return frame;
 }

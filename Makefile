@@ -37,7 +37,7 @@ MOVE          = mv -f
 TAR           = tar -cf
 COMPRESS      = gzip -9f
 DISTNAME      = app1.0.0
-DISTDIR = /mnt/c/Users/godai/Documents/BUT/2e_annee/semestre_2/C++/Mini_projet/Mon_appli_gestion_budget/.tmp/app1.0.0
+DISTDIR = /home/raph/Téléchargements/Mon_appli_gestion_budget/.tmp/app1.0.0
 LINK          = g++
 LFLAGS        = -Wl,-O1
 LIBS          = $(SUBLIBS) /usr/lib/x86_64-linux-gnu/libQt5Charts.so /usr/lib/x86_64-linux-gnu/libQt5Widgets.so /usr/lib/x86_64-linux-gnu/libQt5Gui.so /usr/lib/x86_64-linux-gnu/libQt5Core.so -lGL -lpthread   
@@ -58,6 +58,7 @@ SOURCES       = app.cpp \
 		Model/structure_model.cpp \
 		Model/utilisateur_model.cpp \
 		View/accueil_view.cpp \
+		View/lister_toutes_depenses_view.cpp \
 		View/menu.cpp \
 		View/nv_budget_view.cpp \
 		View/nvle_depense_view.cpp \
@@ -68,6 +69,7 @@ OBJECTS       = app.o \
 		structure_model.o \
 		utilisateur_model.o \
 		accueil_view.o \
+		lister_toutes_depenses_view.o \
 		menu.o \
 		nv_budget_view.o \
 		nvle_depense_view.o \
@@ -156,6 +158,7 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		Model/structure_model.cpp \
 		Model/utilisateur_model.cpp \
 		View/accueil_view.cpp \
+		View/lister_toutes_depenses_view.cpp \
 		View/menu.cpp \
 		View/nv_budget_view.cpp \
 		View/nvle_depense_view.cpp \
@@ -345,7 +348,7 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents app.cpp Controller/controller.cpp Data/data.cpp Model/structure_model.cpp Model/utilisateur_model.cpp View/accueil_view.cpp View/menu.cpp View/nv_budget_view.cpp View/nvle_depense_view.cpp View/view.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents app.cpp Controller/controller.cpp Data/data.cpp Model/structure_model.cpp Model/utilisateur_model.cpp View/accueil_view.cpp View/lister_toutes_depenses_view.cpp View/menu.cpp View/nv_budget_view.cpp View/nvle_depense_view.cpp View/view.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -397,11 +400,12 @@ compiler_clean: compiler_moc_predefs_clean
 
 app.o: app.cpp Fichiers_hpp/global.hpp \
 		Fichiers_hpp/accueil_view.hpp \
-		Fichiers_hpp/utilisateur_model.hpp \
 		Fichiers_hpp/data.hpp \
+		Fichiers_hpp/utilisateur_model.hpp \
 		Fichiers_hpp/structure_model.hpp \
 		Fichiers_hpp/controller.hpp \
 		Fichiers_hpp/view.hpp \
+		Fichiers_hpp/lister_toutes_depenses_view.hpp \
 		Fichiers_hpp/menu.hpp \
 		Fichiers_hpp/nv_budget_view.hpp \
 		Fichiers_hpp/nvle_depense_view.hpp
@@ -413,6 +417,7 @@ controller.o: Controller/controller.cpp Fichiers_hpp/controller.hpp \
 		Fichiers_hpp/structure_model.hpp \
 		Fichiers_hpp/view.hpp \
 		Fichiers_hpp/accueil_view.hpp \
+		Fichiers_hpp/lister_toutes_depenses_view.hpp \
 		Fichiers_hpp/menu.hpp \
 		Fichiers_hpp/nv_budget_view.hpp \
 		Fichiers_hpp/nvle_depense_view.hpp
@@ -430,10 +435,16 @@ utilisateur_model.o: Model/utilisateur_model.cpp Fichiers_hpp/utilisateur_model.
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o utilisateur_model.o Model/utilisateur_model.cpp
 
 accueil_view.o: View/accueil_view.cpp Fichiers_hpp/accueil_view.hpp \
-		Fichiers_hpp/utilisateur_model.hpp \
 		Fichiers_hpp/data.hpp \
+		Fichiers_hpp/utilisateur_model.hpp \
 		Fichiers_hpp/structure_model.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o accueil_view.o View/accueil_view.cpp
+
+lister_toutes_depenses_view.o: View/lister_toutes_depenses_view.cpp Fichiers_hpp/lister_toutes_depenses_view.hpp \
+		Fichiers_hpp/structure_model.hpp \
+		Fichiers_hpp/utilisateur_model.hpp \
+		Fichiers_hpp/data.hpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o lister_toutes_depenses_view.o View/lister_toutes_depenses_view.cpp
 
 menu.o: View/menu.cpp Fichiers_hpp/menu.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o menu.o View/menu.cpp
@@ -442,14 +453,16 @@ nv_budget_view.o: View/nv_budget_view.cpp Fichiers_hpp/nv_budget_view.hpp \
 		Fichiers_hpp/data.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o nv_budget_view.o View/nv_budget_view.cpp
 
-nvle_depense_view.o: View/nvle_depense_view.cpp Fichiers_hpp/nvle_depense_view.hpp
+nvle_depense_view.o: View/nvle_depense_view.cpp Fichiers_hpp/nvle_depense_view.hpp \
+		Fichiers_hpp/data.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o nvle_depense_view.o View/nvle_depense_view.cpp
 
 view.o: View/view.cpp Fichiers_hpp/view.hpp \
 		Fichiers_hpp/accueil_view.hpp \
-		Fichiers_hpp/utilisateur_model.hpp \
 		Fichiers_hpp/data.hpp \
+		Fichiers_hpp/utilisateur_model.hpp \
 		Fichiers_hpp/structure_model.hpp \
+		Fichiers_hpp/lister_toutes_depenses_view.hpp \
 		Fichiers_hpp/menu.hpp \
 		Fichiers_hpp/nv_budget_view.hpp \
 		Fichiers_hpp/nvle_depense_view.hpp
