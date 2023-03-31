@@ -10,6 +10,7 @@ NvleDepenseView::NvleDepenseView() {
 
     comboBoxJour = new QComboBox();
     comboBoxMois = new QComboBox();
+    comboBoxAnnee = new QComboBox();
     comboBoxCategorieDepense = new QComboBox();
     comboBoxEnveloppe = new QComboBox();
 
@@ -40,7 +41,9 @@ void NvleDepenseView::initPage() {
         if (i <= 12) comboBoxMois->addItem(QString::number(i));
     }
 
-    for (int i = 1; i < Data::composants_budget.size(); i += 1)
+    for (int i = 2023; i <= 2023 + 1; i += 1) comboBoxAnnee->addItem(QString::number(i));
+
+    for (int i = 1; i < (int) Data::composants_budget.size(); i += 1)
         comboBoxCategorieDepense->addItem(QString::fromStdString(Data::composants_budget[i]));
 
     lineEditMontant->setValidator(validateur);
@@ -69,13 +72,19 @@ void NvleDepenseView::initComboBoxEnveloppe(int nb) {
 }
 
 void NvleDepenseView::setStyle() {
-    btnValide->setGeometry(10, 10, 80, 30);
+    labelPage->setStyleSheet("QLabel { font: 18pt; font-weight: bold; }");
+    labelPage->setAlignment(Qt::AlignCenter);
+
+    hBoxCategorie->setSpacing(200);
+
+    btnValide->setStyleSheet("QPushButton {background: #c4ffdc;}");
 }
 
 void NvleDepenseView::addToWindow() {
     hBoxDate->addWidget(labelDateDepense);
     hBoxDate->addWidget(comboBoxJour);
     hBoxDate->addWidget(comboBoxMois);
+    hBoxDate->addWidget(comboBoxAnnee);
 
     hBoxDescription->addWidget(labelDescriptionDepense);
     hBoxDescription->addWidget(lineEditDescription);
@@ -102,6 +111,10 @@ QComboBox* NvleDepenseView::getComboBoxJour() {
 
 QComboBox* NvleDepenseView::getComboBoxMois() {
     return comboBoxMois;
+}
+
+QComboBox* NvleDepenseView::getComboBoxAnnee() {
+    return comboBoxAnnee;
 }
 
 QComboBox* NvleDepenseView::getComboBoxCategorieDepense() {

@@ -16,6 +16,8 @@ class Controller {
         void addBudget();
         void donneInfos(int index);
         void addDepense();
+        void changeDetailBudget(int index);
+        void supprimerBudget(int index);
 
     private:
         Utilisateur *user;

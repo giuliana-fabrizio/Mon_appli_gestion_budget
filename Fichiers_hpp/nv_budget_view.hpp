@@ -15,8 +15,10 @@ class NvBudgetView {
 
         QComboBox *getComboBoxJourDebut();
         QComboBox *getComboBoxJourFin();
+        QComboBox *getComboBoxAnneeDebut();
         QComboBox *getComboBoxMoisDebut();
         QComboBox *getComboBoxMoisFin();
+        QComboBox *getComboBoxAnneeFin();
 
         QTableWidget* getTableWidgetRevenus();
         QTableWidget* getTableWidgetDepensesFixes();
@@ -32,11 +34,17 @@ class NvBudgetView {
         QLabel *labelDateDebut;
         QLabel *labelDateFin;
         QLabel *labelPrevoir;
+        QLabel *labelRevenu;
+        QLabel *labelFixes;
+        QLabel *labelVariables;
+        QLabel *labelAutres;
 
         QComboBox *comboBoxJourDebut;
         QComboBox *comboBoxJourFin;
+        QComboBox *comboBoxAnneeDebut;
         QComboBox *comboBoxMoisDebut;
         QComboBox *comboBoxMoisFin;
+        QComboBox *comboBoxAnneeFin;
 
         QDoubleValidator *validateur;
         QLineEdit *lineText;
@@ -50,9 +58,9 @@ class NvBudgetView {
 
         QHBoxLayout *hBoxDateDebut;
         QHBoxLayout *hBoxDateFin;
-        QHBoxLayout *hBoxTablesWidget;
 
         QFrame *frame;
+        QGridLayout *gridLayoutTables;
         QGridLayout *layout;
 };
 

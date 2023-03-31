@@ -4,14 +4,19 @@
 NvBudgetView::NvBudgetView() {
     labelPage = new QLabel("Définir un nouveau budget");
     labelDateDebut = new QLabel("Date de début :");
-    labelDateFin = new QLabel("Date de fin :");
-    labelPrevoir = new QLabel("Prevoyez vos enveloppe");
-    // QLabel *labelAnnee = new QLabel(QString::number(annee_courante));
+    labelDateFin = new QLabel("Date de fin");
+    labelPrevoir = new QLabel("Prevoyez vos enveloppes");
+    labelRevenu = new QLabel("Vos revenus (nom revenu -- montant)");
+    labelFixes = new QLabel("Vos dépenses fixes");
+    labelVariables = new QLabel("Vos dépenses variables");
+    labelAutres = new QLabel("Vos autres dépenses");
 
     comboBoxJourDebut = new QComboBox();
     comboBoxJourFin = new QComboBox();
+    comboBoxAnneeDebut = new QComboBox();
     comboBoxMoisDebut = new QComboBox();
     comboBoxMoisFin = new QComboBox();
+    comboBoxAnneeFin = new QComboBox();
 
     validateur = new QDoubleValidator();
 
@@ -24,9 +29,9 @@ NvBudgetView::NvBudgetView() {
 
     hBoxDateDebut = new QHBoxLayout();
     hBoxDateFin = new QHBoxLayout();
-    hBoxTablesWidget = new QHBoxLayout();
 
     frame = new QFrame();
+    gridLayoutTables = new QGridLayout();
     layout = new QGridLayout(frame);
 
     init();
@@ -44,6 +49,11 @@ void NvBudgetView::init() {
             comboBoxMoisDebut->addItem(QString::number(i));
             comboBoxMoisFin->addItem(QString::number(i));
         }
+    }
+
+    for (int i = 2023; i <= 2023 + 1; i += 1) {
+        comboBoxAnneeDebut->addItem(QString::number(i));
+        comboBoxAnneeFin->addItem(QString::number(i));
     }
 
     for (int i = 0; i < 5; i += 1) {
@@ -82,28 +92,76 @@ void NvBudgetView::init() {
 }
 
 void NvBudgetView::setStyle() {
-    btnValide->setGeometry(10, 10, 80, 30);
+    labelPage->setStyleSheet("QLabel { font: 18pt; font-weight: bold; }");
+    labelPage->setAlignment(Qt::AlignCenter);
+    labelPrevoir->setStyleSheet("QLabel { font: 15pt; }");
+    labelPrevoir->setAlignment(Qt::AlignCenter);
+    labelPrevoir->setContentsMargins(0, 0, 0, 30);
+    labelDateDebut->setStyleSheet("QLabel { font: 12pt; }");
+    labelDateFin->setStyleSheet("QLabel { font: 12pt; }");
+    labelRevenu->setStyleSheet("QLabel { font: 12pt; }");
+    labelRevenu->setContentsMargins(0, 0, 0, 10);
+    labelFixes->setStyleSheet("QLabel { font: 12pt; }");
+    labelFixes->setContentsMargins(0, 0, 0, 10);
+    labelVariables->setStyleSheet("QLabel { font: 12pt; }");
+    labelVariables->setContentsMargins(0, 0, 0, 10);
+    labelAutres->setStyleSheet("QLabel { font: 12pt; }");
+    labelAutres->setContentsMargins(0, 0, 0, 10);
+
+    for (int i = 0; i < 2; i += 1) {
+        tableWidget_revenus->setColumnWidth(i, 200);
+        tableWidget_depenses_fixes->setColumnWidth(i, 200);
+        tableWidget_depenses_variables->setColumnWidth(i, 200);
+        tableWidget_autres_depenses->setColumnWidth(i, 200);
+    }
+
+    tableWidget_revenus->setStyleSheet("QTableWidget {border: none; gridline-color: white;}");
+    tableWidget_depenses_fixes->setStyleSheet("QTableWidget {border: none; gridline-color: white;}");
+    tableWidget_depenses_variables->setStyleSheet("QTableWidget {border: none; gridline-color: white;}");
+    tableWidget_autres_depenses->setStyleSheet("QTableWidget {border: none; gridline-color: white;}");
+
+    tableWidget_revenus->horizontalHeader()->setVisible(false);
+    tableWidget_revenus->verticalHeader()->setVisible(false);
+    tableWidget_depenses_fixes->horizontalHeader()->setVisible(false);
+    tableWidget_depenses_fixes->verticalHeader()->setVisible(false);
+    tableWidget_depenses_variables->horizontalHeader()->setVisible(false);
+    tableWidget_depenses_variables->verticalHeader()->setVisible(false);
+    tableWidget_autres_depenses->horizontalHeader()->setVisible(false);
+    tableWidget_autres_depenses->verticalHeader()->setVisible(false);
+
+    hBoxDateDebut->setContentsMargins(0, 60, 0, 10);
+    hBoxDateFin->setContentsMargins(0, 10, 0, 40);
+
+    gridLayoutTables->setContentsMargins(500, 0, 500, 0);
+
+    btnValide->setStyleSheet("QPushButton {background: #c4ffdc;}");
 }
 
 void NvBudgetView::addToWindow() {
     hBoxDateDebut->addWidget(labelDateDebut);
     hBoxDateDebut->addWidget(comboBoxJourDebut);
     hBoxDateDebut->addWidget(comboBoxMoisDebut);
+    hBoxDateDebut->addWidget(comboBoxAnneeDebut);
 
     hBoxDateFin->addWidget(labelDateFin);
     hBoxDateFin->addWidget(comboBoxJourFin);
     hBoxDateFin->addWidget(comboBoxMoisFin);
+    hBoxDateFin->addWidget(comboBoxAnneeFin);
 
-    hBoxTablesWidget->addWidget(tableWidget_revenus);
-    hBoxTablesWidget->addWidget(tableWidget_depenses_fixes);
-    hBoxTablesWidget->addWidget(tableWidget_depenses_variables);
-    hBoxTablesWidget->addWidget(tableWidget_autres_depenses);
+    gridLayoutTables->addWidget(labelRevenu, 1, 0);
+    gridLayoutTables->addWidget(tableWidget_revenus, 2, 0);
+    gridLayoutTables->addWidget(labelFixes, 1, 1);
+    gridLayoutTables->addWidget(tableWidget_depenses_fixes, 2, 1);
+    gridLayoutTables->addWidget(labelVariables, 3, 0);
+    gridLayoutTables->addWidget(tableWidget_depenses_variables, 4, 0);
+    gridLayoutTables->addWidget(labelAutres, 3, 1);
+    gridLayoutTables->addWidget(tableWidget_autres_depenses, 4, 1);
 
     layout->addWidget(labelPage, 0, 0);
     layout->addLayout(hBoxDateDebut, 1, 0);
     layout->addLayout(hBoxDateFin, 2, 0);
     layout->addWidget(labelPrevoir, 3, 0);
-    layout->addLayout(hBoxTablesWidget, 4, 0);
+    layout->addLayout(gridLayoutTables, 4, 0);
     layout->addWidget(btnValide, 5, 0);
 }
 
@@ -119,8 +177,16 @@ QComboBox* NvBudgetView::getComboBoxMoisDebut() {
     return comboBoxMoisDebut;
 }
 
+QComboBox* NvBudgetView::getComboBoxAnneeDebut() {
+    return comboBoxAnneeDebut;
+}
+
 QComboBox* NvBudgetView::getComboBoxMoisFin() {
     return comboBoxMoisFin;
+}
+
+QComboBox* NvBudgetView::getComboBoxAnneeFin() {
+    return comboBoxAnneeFin;
 }
 
 QTableWidget* NvBudgetView::getTableWidgetRevenus() {

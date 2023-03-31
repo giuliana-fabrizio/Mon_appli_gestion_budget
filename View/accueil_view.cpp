@@ -39,77 +39,121 @@ AccueilView::AccueilView(Utilisateur *user) {
     layout = new QGridLayout(frame);
 
     init();
+    setStyle();
     addToWindow();
 }
 
 void AccueilView::init() {
     int cpt = 0;
-    double montant, total_depense = 0, total_revenu = 0;
+    double montant = 0, total_depense = 0, total_revenu = 0;
 
-    // ====================================================================================================== graph autres_depenses
-    for (Enveloppe enveloppe : user->getLastBudget().depenses_fixes) {
-        montant = 0;
+    if ((int) user->getHistoriqueBudget().size() >= 1) {
 
-        for (Depense depense : enveloppe.list_depense) montant += depense.montant_depense;
-        total_depense += montant;
-        valeurs_depenses_fixes->append(QString::fromStdString(enveloppe.libelle_enveloppe), montant);
+        // ====================================================================================================== graph autres_depenses
+        for (Enveloppe enveloppe : user->getLastBudget().depenses_fixes) {
+            montant = 0;
 
-        tableWidget_depenses_fixes->setCellWidget(cpt, 0, new QLabel(QString::fromStdString(enveloppe.libelle_enveloppe)));
-        tableWidget_depenses_fixes->setCellWidget(cpt, 1, new QLabel(QString::fromStdString(std::to_string(montant))));
-        tableWidget_depenses_fixes->setCellWidget(cpt, 2, new QLabel(QString::fromStdString(std::to_string(enveloppe.budget_prevu))));
+            for (Depense depense : enveloppe.list_depense) montant += depense.montant_depense;
+            total_depense += montant;
+            valeurs_depenses_fixes->append(QString::fromStdString(enveloppe.libelle_enveloppe), montant);
 
-        cpt += 1;
+            QLabel *labelMontantDepense = new QLabel(QString::fromStdString(std::to_string(montant)));
+
+            if (montant > enveloppe.budget_prevu)
+                labelMontantDepense->setStyleSheet("color: red;");
+
+            tableWidget_depenses_fixes->setCellWidget(cpt, 0, new QLabel(QString::fromStdString(enveloppe.libelle_enveloppe)));
+            tableWidget_depenses_fixes->setCellWidget(cpt, 1, labelMontantDepense);
+            tableWidget_depenses_fixes->setCellWidget(cpt, 2, new QLabel(QString::fromStdString(std::to_string(enveloppe.budget_prevu))));
+
+            cpt += 1;
+        }
+
+        // ====================================================================================================== graph depenses_variables
+        cpt = 0;
+        for (Enveloppe enveloppe : user->getLastBudget().depenses_variables) {
+            montant = 0;
+
+            for (Depense depense : enveloppe.list_depense) montant += depense.montant_depense;
+            total_depense += montant;
+            valeurs_depenses_variables->append(QString::fromStdString(enveloppe.libelle_enveloppe), montant);
+
+            QLabel *labelMontantDepense = new QLabel(QString::fromStdString(std::to_string(montant)));
+
+            if (montant > enveloppe.budget_prevu)
+                labelMontantDepense->setStyleSheet("color: red;");
+
+            tableWidget_depenses_variables->setCellWidget(cpt, 0, new QLabel(QString::fromStdString(enveloppe.libelle_enveloppe)));
+            tableWidget_depenses_variables->setCellWidget(cpt, 1, labelMontantDepense);
+            tableWidget_depenses_variables->setCellWidget(cpt, 2, new QLabel(QString::fromStdString(std::to_string(enveloppe.budget_prevu))));
+
+            cpt += 1;
+        }
+
+        // ====================================================================================================== graph autres_depenses
+        cpt = 0;
+        for (Enveloppe enveloppe : user->getLastBudget().autres_depenses) {
+            montant = 0;
+
+            for (Depense depense : enveloppe.list_depense) montant += depense.montant_depense;
+            total_depense += montant;
+            valeurs_autres_depenses->append(QString::fromStdString(enveloppe.libelle_enveloppe), montant);
+
+            QLabel *labelMontantDepense = new QLabel(QString::fromStdString(std::to_string(montant)));
+
+            if (montant > enveloppe.budget_prevu)
+                labelMontantDepense->setStyleSheet("color: red;");
+
+            tableWidget_autres_depenses->setCellWidget(cpt, 0, new QLabel(QString::fromStdString(enveloppe.libelle_enveloppe)));
+            tableWidget_autres_depenses->setCellWidget(cpt, 1, labelMontantDepense);
+            tableWidget_autres_depenses->setCellWidget(cpt, 2, new QLabel(QString::fromStdString(std::to_string(enveloppe.budget_prevu))));
+
+            cpt += 1;
+        }
+
+        // ====================================================================================================== a propos des revenus
+        cpt = 0;
+        for (Revenu revenu : user->getLastBudget().list_revenus) {
+            total_revenu += revenu.montant_revenu;
+
+            tableWidget_revenus->setCellWidget(cpt, 0, new QLabel(QString::fromStdString(revenu.libelle_revenu)));
+            tableWidget_revenus->setCellWidget(cpt, 1, new QLabel(QString::fromStdString(std::to_string(revenu.montant_revenu))));
+
+            cpt += 1;
+        }
+
+        pgBarDepense->setValue(total_depense * 100 / total_revenu);
     }
-
-    // ====================================================================================================== graph depenses_variables
-    cpt = 0;
-    for (Enveloppe enveloppe : user->getLastBudget().depenses_variables) {
-        montant = 0;
-
-        for (Depense depense : enveloppe.list_depense) montant += depense.montant_depense;
-        total_depense += montant;
-        valeurs_depenses_variables->append(QString::fromStdString(enveloppe.libelle_enveloppe), montant);
-
-        tableWidget_depenses_variables->setCellWidget(cpt, 0, new QLabel(QString::fromStdString(enveloppe.libelle_enveloppe)));
-        tableWidget_depenses_variables->setCellWidget(cpt, 1, new QLabel(QString::fromStdString(std::to_string(montant))));
-        tableWidget_depenses_variables->setCellWidget(cpt, 2, new QLabel(QString::fromStdString(std::to_string(enveloppe.budget_prevu))));
-
-        cpt += 1;
-    }
-
-    // ====================================================================================================== graph autres_depenses
-    cpt = 0;
-    for (Enveloppe enveloppe : user->getLastBudget().autres_depenses) {
-        montant = 0;
-
-        for (Depense depense : enveloppe.list_depense) montant += depense.montant_depense;
-        total_depense += montant;
-        valeurs_autres_depenses->append(QString::fromStdString(enveloppe.libelle_enveloppe), montant);
-
-        tableWidget_autres_depenses->setCellWidget(cpt, 0, new QLabel(QString::fromStdString(enveloppe.libelle_enveloppe)));
-        tableWidget_autres_depenses->setCellWidget(cpt, 1, new QLabel(QString::fromStdString(std::to_string(montant))));
-        tableWidget_autres_depenses->setCellWidget(cpt, 2, new QLabel(QString::fromStdString(std::to_string(enveloppe.budget_prevu))));
-
-        cpt += 1;
-    }
-
-    // ====================================================================================================== a propos des revenus
-    cpt = 0;
-    for (Revenu revenu : user->getLastBudget().list_revenus) {
-        total_revenu += revenu.montant_revenu;
-
-        tableWidget_revenus->setCellWidget(cpt, 0, new QLabel(QString::fromStdString(revenu.libelle_revenu)));
-        tableWidget_revenus->setCellWidget(cpt, 1, new QLabel(QString::fromStdString(std::to_string(revenu.montant_revenu))));
-
-        cpt += 1;
-    }
-
-    pgBarDepense->setValue(total_depense * 100 / total_revenu);
 }
 
 void AccueilView::setStyle() {
-    // labelDateBudget->setStyleSheet("color: pink;");
-    pgBarDepense->setFixedSize(250, 30);
+    labelRevenu->setStyleSheet("QLabel { font: 12pt; }");
+    labelFixes->setStyleSheet("QLabel { font: 12pt; }");
+    labelVariables->setStyleSheet("QLabel { font: 12pt; }");
+    labelAutres->setStyleSheet("QLabel { font: 12pt; }");
+
+    for (int i = 0; i < 3; i += 1) {
+        tableWidget_revenus->setColumnWidth(i, 300);
+        tableWidget_depenses_fixes->setColumnWidth(i, 300);
+        tableWidget_depenses_variables->setColumnWidth(i, 300);
+        tableWidget_autres_depenses->setColumnWidth(i, 300);
+    }
+
+    tableWidget_revenus->setStyleSheet("QTableWidget {border: none; gridline-color: white;}");
+    tableWidget_depenses_fixes->setStyleSheet("QTableWidget {border: none; gridline-color: white;}");
+    tableWidget_depenses_variables->setStyleSheet("QTableWidget {border: none; gridline-color: white;}");
+    tableWidget_autres_depenses->setStyleSheet("QTableWidget {border: none; gridline-color: white;}");
+
+    tableWidget_revenus->horizontalHeader()->setVisible(false);
+    tableWidget_revenus->verticalHeader()->setVisible(false);
+    tableWidget_depenses_fixes->horizontalHeader()->setVisible(false);
+    tableWidget_depenses_fixes->verticalHeader()->setVisible(false);
+    tableWidget_depenses_variables->horizontalHeader()->setVisible(false);
+    tableWidget_depenses_variables->verticalHeader()->setVisible(false);
+    tableWidget_autres_depenses->horizontalHeader()->setVisible(false);
+    tableWidget_autres_depenses->verticalHeader()->setVisible(false);
+
+    pgBarDepense->setFixedSize(300, 30);
     pgBarDepense->setStyleSheet(
         "QProgressBar {"
             "border: 1px solid gray;"
@@ -117,9 +161,6 @@ void AccueilView::setStyle() {
             "text-align: center;"
         "}"
     );
-    chartView_depenses_fixes->setFixedSize(800, 800);
-    chartView_depenses_variables->setFixedSize(800, 800);
-    chartView_autres_depenses->setFixedSize(800, 800);
 }
 
 void AccueilView::addToWindow() {

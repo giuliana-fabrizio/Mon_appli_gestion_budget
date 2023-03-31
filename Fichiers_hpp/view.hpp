@@ -2,6 +2,7 @@
 #define VIEW_HPP
 
 #include "accueil_view.hpp"
+#include "lister_toutes_depenses_view.hpp"
 #include "menu.hpp"
 #include "nv_budget_view.hpp"
 #include "nvle_depense_view.hpp"
@@ -21,6 +22,8 @@ class View {
         AccueilView *getAccueilView();
         NvBudgetView *getNvBudgetView();
         NvleDepenseView *getNvleDepenseView();
+        ListerToutesDepensesView *getListerToutesDepensesView();
+        QWidget *getWindow();
 
     private:
         Menu *menu;
@@ -28,9 +31,11 @@ class View {
         AccueilView *accueilView;
         NvBudgetView *nvBudgetView;
         NvleDepenseView *nvleDepenseView;
+        ListerToutesDepensesView *listerToutesDepensesView;
+
         QStackedWidget *stackedWidget;
         QVBoxLayout *vBoxLayout;
-        QWidget window;
+        QWidget *window;
 };
 
 #endif

@@ -1,3 +1,4 @@
+CONFIG += debug
 TEMPLATE = app
 TARGET = app
 QT = core gui widgets charts

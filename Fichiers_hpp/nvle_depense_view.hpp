@@ -15,6 +15,7 @@ class NvleDepenseView {
 
         QComboBox *getComboBoxJour();
         QComboBox *getComboBoxMois();
+        QComboBox *getComboBoxAnnee();
         QComboBox *getComboBoxCategorieDepense();
         QComboBox *getComboBoxEnveloppe();
 
@@ -35,6 +36,7 @@ class NvleDepenseView {
 
         QComboBox *comboBoxJour;
         QComboBox *comboBoxMois;
+        QComboBox *comboBoxAnnee;
         QComboBox *comboBoxCategorieDepense;
         QComboBox *comboBoxEnveloppe;
 
