@@ -2,5 +2,5 @@
 
 std::vector<std::string> Data::composants_budget = {"Revenus", "Dépenses fixes", "Dépenses variables", "Autres dépenses"};
 std::vector<std::string> Data::autres_depenses_predefinies = {"Cadeaux", "Voyage"};
-std::vector<std::string> Data::depenses_fixes_predefinies = {"Assurance logement", "Logement", "Impot sur le revenu", "Assurance auto", "Transports", "Tel. mobile", "Internet"};
+std::vector<std::string> Data::depenses_fixes_predefinies = {"Logement & Assurance", "Impot sur le revenu", "Assurance auto", "Transports", "Tel. mobile", "Internet"};
 std::vector<std::string> Data::depenses_variables_predefinies = {"Courses", "Eau / Electricité, . . .", "Habillement", "Divers"};

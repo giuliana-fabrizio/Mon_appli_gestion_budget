@@ -25,25 +25,27 @@ void Utilisateur::ajouterBudget(Date debut, Date fin, std::vector<double> previs
         budget.depenses_variables.push_back(enveloppe);
     }
 
-    for (Revenu revenu : revenu_dispo) budget.list_revenus.push_back(revenu);
+    for (Revenu revenu : revenu_dispo)
+        budget.list_revenus.push_back(revenu);
 
     historique_budget.push_back(budget);
 }
 
 void Utilisateur::ajouterDepense(Date date, double montant, std::string description, int id_categorie, int id_enveloppe) {
+
     Depense depense = {date, montant, description};
 
     switch (id_categorie) {
         default:
-            historique_budget[historique_budget.size()-1].depenses_fixes[id_enveloppe].list_depense.push_back(depense);
+            historique_budget[historique_budget.size() - 1].depenses_fixes[id_enveloppe].list_depense.push_back(depense);
             break;
 
         case 1:
-            historique_budget[historique_budget.size()-1].depenses_variables[id_enveloppe].list_depense.push_back(depense);
+            historique_budget[historique_budget.size() - 1].depenses_variables[id_enveloppe].list_depense.push_back(depense);
             break;
 
         case 2:
-            historique_budget[historique_budget.size()-1].autres_depenses[id_enveloppe].list_depense.push_back(depense);
+            historique_budget[historique_budget.size() - 1].autres_depenses[id_enveloppe].list_depense.push_back(depense);
             break;
     }
 }
@@ -57,19 +59,5 @@ std::vector<Budget> Utilisateur::getHistoriqueBudget() {
 }
 
 Budget Utilisateur::getLastBudget() {
-    return historique_budget[historique_budget.size()-1];
+    return historique_budget[historique_budget.size() - 1];
 }
-
-// int main() {
-//     Date debutBudG = {1, 12, 2023};
-//     Date finBudG = {31, 12, 2023};
-//     Date depense = {3, 12, 2023};
-//     Revenu revenu = {2045.86, "salaire"};
-//     double montant = 50.53;
-//     std::string description = "Ours en peluche pour Jerémy";
-
-//     Utilisateur *user = new Utilisateur();
-//     user->ajouterBudget(debutBudG, finBudG, revenu);
-//     user->ajouterDepense(depense, montant, description, 0);
-//     std::cout << user->getHistoriqueBudget()[user->getHistoriqueBudget().size()-1].autres_depenses[0].list_depense[0].description_depense << std::endl;
-// }

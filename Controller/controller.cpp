@@ -9,25 +9,19 @@ Controller::Controller(Utilisateur *user, View *view) {
 }
 
 void Controller::connect() {
-    QObject::connect(view->getMenu()->getActionPageAccueil(), &QAction::triggered, [=]() {
-        changePage(1);
-    });
-    QObject::connect(view->getMenu()->getActionPageBudget(), &QAction::triggered, [=]() {
-        changePage(2);
-    });
-    QObject::connect(view->getMenu()->getActionPageDepense(), &QAction::triggered, [=]() {
-        changePage(3);
-    });
-    QObject::connect(view->getMenu()->getActionPageHistorique(), &QAction::triggered, [=]() {
-        changePage(4);
-    });
+    QObject::connect(view->getMenu()->getActionPageAccueil(), &QAction::triggered, [=]()
+                     { changePage(1); });
+    QObject::connect(view->getMenu()->getActionPageBudget(), &QAction::triggered, [=]()
+                     { changePage(2); });
+    QObject::connect(view->getMenu()->getActionPageDepense(), &QAction::triggered, [=]()
+                     { changePage(3); });
+    QObject::connect(view->getMenu()->getActionPageHistorique(), &QAction::triggered, [=]()
+                     { changePage(4); });
 
-    QObject::connect(view->getNvBudgetView()->getBtnValide(), &QPushButton::clicked, [=]() {
-        addBudget();
-    });
-    QObject::connect(view->getNvleDepenseView()->getBtnValide(), &QPushButton::clicked, [=]() {
-        addDepense();
-    });
+    QObject::connect(view->getNvBudgetView()->getBtnValide(), &QPushButton::clicked, [=]()
+                     { addBudget(); });
+    QObject::connect(view->getNvleDepenseView()->getBtnValide(), &QPushButton::clicked, [=]()
+                     { addDepense(); });
 
     QObject::connect(view->getNvleDepenseView()->getComboBoxCategorieDepense(), QOverload<int>::of(&QComboBox::currentIndexChanged), [=]() {
         int index = view->getNvleDepenseView()->getComboBoxCategorieDepense()->currentIndex();

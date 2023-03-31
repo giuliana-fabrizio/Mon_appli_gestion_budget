@@ -7,27 +7,27 @@
 
 class NvBudgetView {
 
-    public:
-        NvBudgetView();
-        void init();
-        void setStyle();
-        void addToWindow();
+public:
+    NvBudgetView();
+    void init();
+    void setStyle();
+    void addToWindow();
 
-        QComboBox *getComboBoxJourDebut();
-        QComboBox *getComboBoxJourFin();
-        QComboBox *getComboBoxAnneeDebut();
-        QComboBox *getComboBoxMoisDebut();
-        QComboBox *getComboBoxMoisFin();
-        QComboBox *getComboBoxAnneeFin();
+    QComboBox *getComboBoxJourDebut();
+    QComboBox *getComboBoxJourFin();
+    QComboBox *getComboBoxAnneeDebut();
+    QComboBox *getComboBoxMoisDebut();
+    QComboBox *getComboBoxMoisFin();
+    QComboBox *getComboBoxAnneeFin();
 
-        QTableWidget* getTableWidgetRevenus();
-        QTableWidget* getTableWidgetDepensesFixes();
-        QTableWidget* getTableWidgetDepensesVariables();
-        QTableWidget* getTableWidgetAutresDepenses();
+    QTableWidget *getTableWidgetRevenus();
+    QTableWidget *getTableWidgetDepensesFixes();
+    QTableWidget *getTableWidgetDepensesVariables();
+    QTableWidget *getTableWidgetAutresDepenses();
 
-        QPushButton *getBtnValide();
+    QPushButton *getBtnValide();
 
-        QFrame *getFrame();
+    QFrame *getFrame();
 
     private:
         QLabel *labelPage;

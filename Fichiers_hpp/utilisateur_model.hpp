@@ -17,8 +17,8 @@ class Utilisateur {
         std::vector<Budget> getHistoriqueBudget();
         Budget getLastBudget();
 
-    private:
-        std::vector<Budget> historique_budget;
+private:
+    std::vector<Budget> historique_budget;
 };
 
 #endif

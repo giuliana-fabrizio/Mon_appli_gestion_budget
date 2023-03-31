@@ -1,7 +1,7 @@
 #include "../Fichiers_hpp/view.hpp"
 
-
 View::View(Utilisateur *user) {
+
     this->user = user;
 
     menu = new Menu();
@@ -25,9 +25,8 @@ void View::setStyle() {
     // window->resize(1500, 1500);
     window->setStyleSheet(
         "QWidget {"
-            "background: white;"
-        "}"
-    );
+        "background: white;"
+        "}");
 }
 
 void View::addWidget() {
@@ -59,19 +58,19 @@ void View::addToScene(int nb) {
     }
 }
 
-Menu* View::getMenu() {
+Menu *View::getMenu() {
     return menu;
 }
 
-AccueilView* View::getAccueilView() {
+AccueilView *View::getAccueilView() {
     return accueilView;
 }
 
-NvBudgetView* View::getNvBudgetView() {
+NvBudgetView *View::getNvBudgetView() {
     return nvBudgetView;
 }
 
-NvleDepenseView* View::getNvleDepenseView() {
+NvleDepenseView *View::getNvleDepenseView() {
     return nvleDepenseView;
 }
 

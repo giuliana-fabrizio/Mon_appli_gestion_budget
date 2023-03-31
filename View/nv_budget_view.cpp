@@ -1,7 +1,7 @@
 #include "../Fichiers_hpp/nv_budget_view.hpp"
 
-
-NvBudgetView::NvBudgetView() {
+NvBudgetView::NvBudgetView()
+{
     labelPage = new QLabel("Définir un nouveau budget");
     labelDateDebut = new QLabel("Date de début :");
     labelDateFin = new QLabel("Date de fin");
@@ -39,13 +39,16 @@ NvBudgetView::NvBudgetView() {
     addToWindow();
 }
 
-void NvBudgetView::init() {
+void NvBudgetView::init()
+{
     int cpt = 0;
 
-    for (int i = 1; i <= 31; i += 1) {
+    for (int i = 1; i <= 31; i += 1)
+    {
         comboBoxJourDebut->addItem(QString::number(i));
         comboBoxJourFin->addItem(QString::number(i));
-        if (i <= 12) {
+        if (i <= 12)
+        {
             comboBoxMoisDebut->addItem(QString::number(i));
             comboBoxMoisFin->addItem(QString::number(i));
         }
@@ -63,7 +66,7 @@ void NvBudgetView::init() {
         tableWidget_revenus->setCellWidget(i, 1, lineText);
     }
 
-    for (std::string s: Data::depenses_fixes_predefinies) {
+    for (std::string s : Data::depenses_fixes_predefinies) {
         tableWidget_depenses_fixes->setCellWidget(cpt, 0, new QLabel(QString::fromStdString(s)));
         lineText = new QLineEdit();
         lineText->setValidator(validateur);
@@ -73,7 +76,7 @@ void NvBudgetView::init() {
     }
 
     cpt = 0;
-    for (std::string s: Data::depenses_variables_predefinies) {
+    for (std::string s : Data::depenses_variables_predefinies) {
         tableWidget_depenses_variables->setCellWidget(cpt, 0, new QLabel(QString::fromStdString(s)));
         lineText = new QLineEdit();
         lineText->setValidator(validateur);
@@ -82,7 +85,7 @@ void NvBudgetView::init() {
     }
 
     cpt = 0;
-    for (std::string s: Data::autres_depenses_predefinies) {
+    for (std::string s : Data::autres_depenses_predefinies) {
         tableWidget_autres_depenses->setCellWidget(cpt, 0, new QLabel(QString::fromStdString(s)));
         lineText = new QLineEdit();
         lineText->setValidator(validateur);
@@ -165,15 +168,18 @@ void NvBudgetView::addToWindow() {
     layout->addWidget(btnValide, 5, 0);
 }
 
-QComboBox* NvBudgetView::getComboBoxJourDebut() {
+QComboBox *NvBudgetView::getComboBoxJourDebut()
+{
     return comboBoxJourDebut;
 }
 
-QComboBox* NvBudgetView::getComboBoxJourFin() {
+QComboBox *NvBudgetView::getComboBoxJourFin()
+{
     return comboBoxJourFin;
 }
 
-QComboBox* NvBudgetView::getComboBoxMoisDebut() {
+QComboBox *NvBudgetView::getComboBoxMoisDebut()
+{
     return comboBoxMoisDebut;
 }
 
@@ -193,22 +199,27 @@ QTableWidget* NvBudgetView::getTableWidgetRevenus() {
     return tableWidget_revenus;
 }
 
-QTableWidget* NvBudgetView::getTableWidgetDepensesFixes() {
+QTableWidget *NvBudgetView::getTableWidgetDepensesFixes()
+{
     return tableWidget_depenses_fixes;
 }
 
-QTableWidget* NvBudgetView::getTableWidgetDepensesVariables() {
+QTableWidget *NvBudgetView::getTableWidgetDepensesVariables()
+{
     return tableWidget_depenses_variables;
 }
 
-QTableWidget* NvBudgetView::getTableWidgetAutresDepenses() {
+QTableWidget *NvBudgetView::getTableWidgetAutresDepenses()
+{
     return tableWidget_autres_depenses;
 }
 
-QPushButton *NvBudgetView::getBtnValide() {
+QPushButton *NvBudgetView::getBtnValide()
+{
     return btnValide;
 }
 
-QFrame* NvBudgetView::getFrame() {
+QFrame *NvBudgetView::getFrame()
+{
     return frame;
 }

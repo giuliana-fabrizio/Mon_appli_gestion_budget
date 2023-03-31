@@ -4,55 +4,56 @@
 #include <QtWidgets>
 #include "data.hpp"
 
-class NvleDepenseView {
+class NvleDepenseView
+{
 
-    public:
-        NvleDepenseView();
-        void initPage();
-        void initComboBoxEnveloppe(int nb);
-        void setStyle();
-        void addToWindow();
+public:
+    NvleDepenseView();
+    void initPage();
+    void initComboBoxEnveloppe(int nb);
+    void setStyle();
+    void addToWindow();
 
-        QComboBox *getComboBoxJour();
-        QComboBox *getComboBoxMois();
-        QComboBox *getComboBoxAnnee();
-        QComboBox *getComboBoxCategorieDepense();
-        QComboBox *getComboBoxEnveloppe();
+    QComboBox *getComboBoxJour();
+    QComboBox *getComboBoxMois();
+    QComboBox *getComboBoxAnnee();
+    QComboBox *getComboBoxCategorieDepense();
+    QComboBox *getComboBoxEnveloppe();
 
-        QLineEdit *getLineEditDescription();
-        QLineEdit *getLineEditMontant();
+    QLineEdit *getLineEditDescription();
+    QLineEdit *getLineEditMontant();
 
-        QPushButton *getBtnValide();
+    QPushButton *getBtnValide();
 
-        QFrame *getFrame();
+    QFrame *getFrame();
 
-    private:
-        QLabel *labelPage;
-        QLabel *labelDateDepense;
-        QLabel *labelMontantDepense;
-        QLabel *labelDescriptionDepense;
-        QLabel *labelCategoriesDepense;
-        QLabel *labelEnveloppeDepense;
+private:
+    QLabel *labelPage;
+    QLabel *labelDateDepense;
+    QLabel *labelMontantDepense;
+    QLabel *labelDescriptionDepense;
+    QLabel *labelCategoriesDepense;
+    QLabel *labelEnveloppeDepense;
 
-        QComboBox *comboBoxJour;
-        QComboBox *comboBoxMois;
-        QComboBox *comboBoxAnnee;
-        QComboBox *comboBoxCategorieDepense;
-        QComboBox *comboBoxEnveloppe;
+    QComboBox *comboBoxJour;
+    QComboBox *comboBoxMois;
+    QComboBox *comboBoxAnnee;
+    QComboBox *comboBoxCategorieDepense;
+    QComboBox *comboBoxEnveloppe;
 
-        QDoubleValidator *validateur;
-        QLineEdit *lineEditDescription;
-        QLineEdit *lineEditMontant;
+    QDoubleValidator *validateur;
+    QLineEdit *lineEditDescription;
+    QLineEdit *lineEditMontant;
 
-        QPushButton *btnValide;
+    QPushButton *btnValide;
 
-        QHBoxLayout *hBoxDate;
-        QHBoxLayout *hBoxDescription;
-        QHBoxLayout *hBoxMontant;
-        QHBoxLayout *hBoxCategorie;
+    QHBoxLayout *hBoxDate;
+    QHBoxLayout *hBoxDescription;
+    QHBoxLayout *hBoxMontant;
+    QHBoxLayout *hBoxCategorie;
 
-        QFrame *frame;
-        QGridLayout *layout;
+    QFrame *frame;
+    QGridLayout *layout;
 };
 
 #endif

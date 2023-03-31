@@ -38,7 +38,8 @@ void NvleDepenseView::initPage() {
 
     for (int i = 1; i <= 31; i += 1) {
         comboBoxJour->addItem(QString::number(i));
-        if (i <= 12) comboBoxMois->addItem(QString::number(i));
+        if (i <= 12)
+            comboBoxMois->addItem(QString::number(i));
     }
 
     for (int i = 2023; i <= 2023 + 1; i += 1) comboBoxAnnee->addItem(QString::number(i));
@@ -71,7 +72,9 @@ void NvleDepenseView::initComboBoxEnveloppe(int nb) {
         comboBoxEnveloppe->addItem(QString::fromStdString(s));
 }
 
+
 void NvleDepenseView::setStyle() {
+
     labelPage->setStyleSheet("QLabel { font: 18pt; font-weight: bold; }");
     labelPage->setAlignment(Qt::AlignCenter);
 
@@ -105,11 +108,11 @@ void NvleDepenseView::addToWindow() {
     layout->addWidget(btnValide, 5, 0);
 }
 
-QComboBox* NvleDepenseView::getComboBoxJour() {
+QComboBox *NvleDepenseView::getComboBoxJour() {
     return comboBoxJour;
 }
 
-QComboBox* NvleDepenseView::getComboBoxMois() {
+QComboBox *NvleDepenseView::getComboBoxMois() {
     return comboBoxMois;
 }
 
@@ -121,22 +124,22 @@ QComboBox* NvleDepenseView::getComboBoxCategorieDepense() {
     return comboBoxCategorieDepense;
 }
 
-QComboBox* NvleDepenseView::getComboBoxEnveloppe() {
+QComboBox *NvleDepenseView::getComboBoxEnveloppe() {
     return comboBoxEnveloppe;
 }
 
-QLineEdit* NvleDepenseView::getLineEditDescription() {
+QLineEdit *NvleDepenseView::getLineEditDescription() {
     return lineEditDescription;
 }
 
-QLineEdit* NvleDepenseView::getLineEditMontant() {
+QLineEdit *NvleDepenseView::getLineEditMontant() {
     return lineEditMontant;
 }
 
-QPushButton* NvleDepenseView::getBtnValide() {
+QPushButton *NvleDepenseView::getBtnValide() {
     return btnValide;
 }
 
-QFrame* NvleDepenseView::getFrame() {
+QFrame *NvleDepenseView::getFrame() {
     return frame;
 }
