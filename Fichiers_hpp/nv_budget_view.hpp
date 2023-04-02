@@ -1,6 +1,8 @@
 #ifndef NV_BUDGET_VIEW_HPP
 #define NV_BUDGET_VIEW_HPP
 
+#include <ctime>
+#include <iostream>
 #include <QtWidgets>
 
 #include "data.hpp"

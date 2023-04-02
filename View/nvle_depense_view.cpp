@@ -42,7 +42,11 @@ void NvleDepenseView::initPage() {
             comboBoxMois->addItem(QString::number(i));
     }
 
-    for (int i = 2023; i <= 2023 + 1; i += 1) comboBoxAnnee->addItem(QString::number(i));
+    std::time_t now = std::time(nullptr);
+    std::tm *local_time = std::localtime(&now);
+    int year = local_time->tm_year + 1900;
+
+    for (int i = year; i <= year + 1; i += 1) comboBoxAnnee->addItem(QString::number(i));
 
     for (int i = 1; i < (int) Data::composants_budget.size(); i += 1)
         comboBoxCategorieDepense->addItem(QString::fromStdString(Data::composants_budget[i]));

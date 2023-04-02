@@ -1,11 +1,13 @@
 #ifndef NVLE_DEPENSE_VIEW_HPP
 #define NVLE_DEPENSE_VIEW_HPP
 
+#include <ctime>
+#include <iostream>
 #include <QtWidgets>
+
 #include "data.hpp"
 
-class NvleDepenseView
-{
+class NvleDepenseView {
 
 public:
     NvleDepenseView();
