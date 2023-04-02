@@ -5,8 +5,6 @@
 #include "structure_model.hpp"
 #include "view.hpp"
 
-#include "structure_model.hpp"
-
 class Controller {
 
     public:

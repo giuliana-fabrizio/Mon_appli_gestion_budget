@@ -1,6 +1,9 @@
 #ifndef ACCUEIL_VIEW_HPP
 #define ACCUEIL_VIEW_HPP
 
+#include <iostream>
+#include <iomanip>
+#include <sstream>
 #include <QtCharts>
 #include <QtWidgets>
 
@@ -52,6 +55,7 @@ class AccueilView {
         QHBoxLayout *hBox_depenses_variables;
         QHBoxLayout *hBox_autres_depenses;
 
+        QGridLayout *gridLayout;
         QGridLayout *layout;
 };
 

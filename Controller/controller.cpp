@@ -160,8 +160,12 @@ void Controller::addDepense() {
     Date debut = user->getLastBudget().date_debut;
     Date fin = user->getLastBudget().date_fin;
 
-    if (date.compareDate(debut) == 2 && date.compareDate(fin) != 1) {
-        QMessageBox::information(view->getWindow(), "Attention ⚠️", "Date de la dépense doit être incluse dans dates du budget actuel.");
+    if (date.compareDate(debut) == 1) {
+        QMessageBox::information(view->getWindow(), "Attention ⚠️", "Date de la dépense soit supérieure ou égale à la date de début du budget actuel.");
+        return;
+    }
+    if (date.compareDate(fin) == 2) {
+        QMessageBox::information(view->getWindow(), "Attention ⚠️", "Date de la dépense soit inférieure  ou égale à la date de fin du budget actuel.");
         return;
     }
 

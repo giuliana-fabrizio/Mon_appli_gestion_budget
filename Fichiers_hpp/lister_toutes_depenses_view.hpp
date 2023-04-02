@@ -1,7 +1,11 @@
 #ifndef LISTER_TOUTES_DEPENSES_VIEW_HPP
 #define LISTER_TOUTES_DEPENSES_VIEW_HPP
 
+#include <iostream>
+#include <iomanip>
+#include <sstream>
 #include <QtWidgets>
+
 #include "structure_model.hpp"
 #include "utilisateur_model.hpp"
 

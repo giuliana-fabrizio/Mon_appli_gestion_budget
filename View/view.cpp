@@ -22,7 +22,7 @@ View::View(Utilisateur *user) {
 }
 
 void View::setStyle() {
-    // window->resize(1500, 1500);
+    window->resize(1920, 1000);
     window->setStyleSheet(
         "QWidget {"
         "background: white;"

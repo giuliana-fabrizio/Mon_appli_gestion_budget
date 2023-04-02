@@ -4,7 +4,8 @@
 AccueilView::AccueilView(Utilisateur *user) {
     this->user = user;
 
-    labelDateBudget = new QLabel("Début : - Fin : " /* + user->getHistoriqueBudget().size()-1].date_debut.toString() */ /* + user->getHistoriqueBudget().size()-1].date_fin.toString() */);
+    labelDateBudget = new QLabel("");
+    
     labelRevenu = new QLabel(QString::fromStdString(Data::composants_budget[0]));
     labelFixes = new QLabel(QString::fromStdString(Data::composants_budget[1]));
     labelVariables = new QLabel(QString::fromStdString(Data::composants_budget[2]));
@@ -25,8 +26,8 @@ AccueilView::AccueilView(Utilisateur *user) {
     chartView_autres_depenses = new QChartView(chart_autres_depenses);
 
     tableWidget_revenus = new QTableWidget(5, 2);
-    tableWidget_depenses_fixes = new QTableWidget(6, 3);
-    tableWidget_depenses_variables = new QTableWidget(3, 3);
+    tableWidget_depenses_fixes = new QTableWidget(7, 3);
+    tableWidget_depenses_variables = new QTableWidget(4, 3);
     tableWidget_autres_depenses = new QTableWidget(2, 3);
 
     frame = new QFrame();
@@ -36,6 +37,7 @@ AccueilView::AccueilView(Utilisateur *user) {
     hBox_depenses_variables = new QHBoxLayout();
     hBox_autres_depenses = new QHBoxLayout();
 
+    gridLayout = new QGridLayout();
     layout = new QGridLayout(frame);
 
     init();
@@ -49,7 +51,12 @@ void AccueilView::init() {
 
     if ((int) user->getHistoriqueBudget().size() >= 1) {
 
-        // ====================================================================================================== graph autres_depenses
+        labelDateBudget->setText(QString::fromStdString("Début : " + 
+                        user->getLastBudget().date_debut.toString() +
+                        " - Fin : " + user->getLastBudget().date_fin.toString()
+        ));
+
+        // ====================================================================================================== graph depenses_fixes
         for (Enveloppe enveloppe : user->getLastBudget().depenses_fixes) {
             montant = 0;
 
@@ -57,14 +64,22 @@ void AccueilView::init() {
             total_depense += montant;
             valeurs_depenses_fixes->append(QString::fromStdString(enveloppe.libelle_enveloppe), montant);
 
-            QLabel *labelMontantDepense = new QLabel(QString::fromStdString(std::to_string(montant)));
+            std::stringstream format;
+            format << std::fixed << std::setprecision(2) << montant;
+            std::string montant_formate = format.str();
+
+            QLabel *labelMontantDepense = new QLabel(QString::fromStdString(montant_formate));
 
             if (montant > enveloppe.budget_prevu)
                 labelMontantDepense->setStyleSheet("color: red;");
 
+            std::stringstream format_prevu;
+            format_prevu << std::fixed << std::setprecision(2) << enveloppe.budget_prevu;
+            std::string montant_prevu_formate = format_prevu.str();
+
             tableWidget_depenses_fixes->setCellWidget(cpt, 0, new QLabel(QString::fromStdString(enveloppe.libelle_enveloppe)));
             tableWidget_depenses_fixes->setCellWidget(cpt, 1, labelMontantDepense);
-            tableWidget_depenses_fixes->setCellWidget(cpt, 2, new QLabel(QString::fromStdString(std::to_string(enveloppe.budget_prevu))));
+            tableWidget_depenses_fixes->setCellWidget(cpt, 2, new QLabel(QString::fromStdString(montant_prevu_formate)));
 
             cpt += 1;
         }
@@ -78,14 +93,22 @@ void AccueilView::init() {
             total_depense += montant;
             valeurs_depenses_variables->append(QString::fromStdString(enveloppe.libelle_enveloppe), montant);
 
-            QLabel *labelMontantDepense = new QLabel(QString::fromStdString(std::to_string(montant)));
+            std::stringstream format;
+            format << std::fixed << std::setprecision(2) << montant;
+            std::string montant_formate = format.str();
+
+            QLabel *labelMontantDepense = new QLabel(QString::fromStdString(montant_formate));
 
             if (montant > enveloppe.budget_prevu)
                 labelMontantDepense->setStyleSheet("color: red;");
 
+            std::stringstream format_prevu;
+            format_prevu << std::fixed << std::setprecision(2) << enveloppe.budget_prevu;
+            std::string montant_prevu_formate = format_prevu.str();
+
             tableWidget_depenses_variables->setCellWidget(cpt, 0, new QLabel(QString::fromStdString(enveloppe.libelle_enveloppe)));
             tableWidget_depenses_variables->setCellWidget(cpt, 1, labelMontantDepense);
-            tableWidget_depenses_variables->setCellWidget(cpt, 2, new QLabel(QString::fromStdString(std::to_string(enveloppe.budget_prevu))));
+            tableWidget_depenses_variables->setCellWidget(cpt, 2, new QLabel(QString::fromStdString(montant_prevu_formate)));
 
             cpt += 1;
         }
@@ -99,14 +122,22 @@ void AccueilView::init() {
             total_depense += montant;
             valeurs_autres_depenses->append(QString::fromStdString(enveloppe.libelle_enveloppe), montant);
 
-            QLabel *labelMontantDepense = new QLabel(QString::fromStdString(std::to_string(montant)));
+            std::stringstream format;
+            format << std::fixed << std::setprecision(2) << montant;
+            std::string montant_formate = format.str();
+
+            QLabel *labelMontantDepense = new QLabel(QString::fromStdString(montant_formate));
 
             if (montant > enveloppe.budget_prevu)
                 labelMontantDepense->setStyleSheet("color: red;");
 
+            std::stringstream format_prevu;
+            format_prevu << std::fixed << std::setprecision(2) << enveloppe.budget_prevu;
+            std::string montant_prevu_formate = format_prevu.str();
+
             tableWidget_autres_depenses->setCellWidget(cpt, 0, new QLabel(QString::fromStdString(enveloppe.libelle_enveloppe)));
             tableWidget_autres_depenses->setCellWidget(cpt, 1, labelMontantDepense);
-            tableWidget_autres_depenses->setCellWidget(cpt, 2, new QLabel(QString::fromStdString(std::to_string(enveloppe.budget_prevu))));
+            tableWidget_autres_depenses->setCellWidget(cpt, 2, new QLabel(QString::fromStdString(montant_prevu_formate)));
 
             cpt += 1;
         }
@@ -116,17 +147,29 @@ void AccueilView::init() {
         for (Revenu revenu : user->getLastBudget().list_revenus) {
             total_revenu += revenu.montant_revenu;
 
+            std::stringstream format;
+            format << std::fixed << std::setprecision(2) << revenu.montant_revenu;
+            std::string montant_formate = format.str();
+
+            if (montant_formate == "0.00") montant_formate = "";
+
             tableWidget_revenus->setCellWidget(cpt, 0, new QLabel(QString::fromStdString(revenu.libelle_revenu)));
-            tableWidget_revenus->setCellWidget(cpt, 1, new QLabel(QString::fromStdString(std::to_string(revenu.montant_revenu))));
+            tableWidget_revenus->setCellWidget(cpt, 1, new QLabel(QString::fromStdString(montant_formate)));
 
             cpt += 1;
         }
 
-        pgBarDepense->setValue(total_depense * 100 / total_revenu);
+        double value_pg_bar = total_depense * 100 / total_revenu;
+        if (value_pg_bar > 100) value_pg_bar = 100;
+        pgBarDepense->setValue(value_pg_bar);
     }
+
+    else labelDateBudget->setText("Pas encore de budget !");
 }
 
 void AccueilView::setStyle() {
+    labelDateBudget->setStyleSheet("QLabel { font: 18pt; font-weight: bold; }");
+    labelDateBudget->setAlignment(Qt::AlignCenter);
     labelRevenu->setStyleSheet("QLabel { font: 12pt; }");
     labelFixes->setStyleSheet("QLabel { font: 12pt; }");
     labelVariables->setStyleSheet("QLabel { font: 12pt; }");
@@ -166,42 +209,38 @@ void AccueilView::setStyle() {
 void AccueilView::addToWindow() {
 
     chart_depenses_fixes->addSeries(valeurs_depenses_fixes);
-    chart_depenses_variables->addSeries(valeurs_depenses_variables);
-    chart_autres_depenses->addSeries(valeurs_autres_depenses);
-
     chart_depenses_fixes->setTitle("Détail de mes dépenses");
+    chart_depenses_variables->addSeries(valeurs_depenses_variables);
     chart_depenses_variables->setTitle("Détail de mes dépenses");
+    chart_autres_depenses->addSeries(valeurs_autres_depenses);
     chart_autres_depenses->setTitle("Détail de mes dépenses");
 
     hBox_revenus->addWidget(labelRevenu);
     hBox_revenus->addWidget(pgBarDepense);
-    layout->addLayout(hBox_revenus, 0, 0);
-    layout->addWidget(tableWidget_revenus, 1, 0);
-
     hBox_depenses_fixes->addWidget(labelFixes);
     hBox_depenses_fixes->addWidget(chartView_depenses_fixes);
-    layout->addLayout(hBox_depenses_fixes, 2, 0);
-    layout->addWidget(tableWidget_depenses_fixes, 3, 0);
-
     hBox_depenses_variables->addWidget(labelVariables);
     hBox_depenses_variables->addWidget(chartView_depenses_variables);
-    layout->addLayout(hBox_depenses_variables, 0, 1);
-    layout->addWidget(tableWidget_depenses_variables, 1, 1);
-
     hBox_autres_depenses->addWidget(labelAutres);
     hBox_autres_depenses->addWidget(chartView_autres_depenses);
-    layout->addLayout(hBox_autres_depenses, 2, 1);
-    layout->addWidget(tableWidget_autres_depenses, 3, 1);
+
+    gridLayout->addLayout(hBox_revenus,0, 0);
+    gridLayout->addWidget(tableWidget_revenus, 1, 0);
+    gridLayout->addLayout(hBox_depenses_fixes, 2, 0);
+    gridLayout->addWidget(tableWidget_depenses_fixes, 3, 0);
+    gridLayout->addLayout(hBox_depenses_variables, 0, 1);
+    gridLayout->addWidget(tableWidget_depenses_variables, 1, 1);
+    gridLayout->addLayout(hBox_autres_depenses, 2, 1);
+    gridLayout->addWidget(tableWidget_autres_depenses, 3, 1);
+
+    layout->addWidget(labelDateBudget, 0, 0);
+    layout->addLayout(gridLayout, 1, 0);
 }
 
 void AccueilView::clearAll() {
     valeurs_depenses_fixes->clear();
     valeurs_depenses_variables->clear();
     valeurs_autres_depenses->clear();
-
-    // chart_depenses_fixes->removeAllSeries();
-    // chart_depenses_variables->removeAllSeries();
-    // chart_autres_depenses->removeAllSeries();
 
     tableWidget_depenses_fixes->clearContents();
     tableWidget_depenses_variables->clearContents();

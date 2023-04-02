@@ -33,12 +33,17 @@ void ListerToutesDepensesView::init(int index) {
 
         Budget budget = user->getHistoriqueBudget()[index];
 
-        for (Revenu revenu: budget.list_revenus)
+        for (Revenu revenu: budget.list_revenus) {
+            std::stringstream format;
+            format << std::fixed << std::setprecision(2) << revenu.montant_revenu;
+            std::string montant_formate = format.str();
+
             list_revenus->addItem(
                 QString::fromStdString(
-                    "\n      • " + revenu.libelle_revenu + " " + std::to_string(revenu.montant_revenu)
+                    "\n      • " + revenu.libelle_revenu + " " + montant_formate
                 )
             );
+        }
 
         remplirCategorie(budget.depenses_fixes, list_depenses_fixes);
         remplirCategorie(budget.depenses_variables, list_depenses_variables);
@@ -63,12 +68,21 @@ void ListerToutesDepensesView::init(int index) {
 void ListerToutesDepensesView::remplirCategorie(std::vector<Enveloppe> listEnveloppe, QListWidget *list) {
 
     for (Enveloppe enveloppe: listEnveloppe) {
+
+        std::stringstream format_prevu;
+        format_prevu << std::fixed << std::setprecision(2) << enveloppe.budget_prevu;
+        std::string montant_prevu_formate = format_prevu.str();
+
         list->addItem(QString::fromStdString("\n      • " + enveloppe.libelle_enveloppe + " " +
-                                std::to_string(enveloppe.budget_prevu)
+                                montant_prevu_formate
         ));
         for (Depense depense: enveloppe.list_depense) {
+            std::stringstream format;
+            format << std::fixed << std::setprecision(2) << depense.montant_depense;
+            std::string montant_formate = format.str();
+
             list->addItem(QString::fromStdString("\n               • " + depense.date_depense.toString() + " " +
-                        std::to_string(depense.montant_depense) +"\n                  " + depense.description_depense
+                        montant_formate +"\n                  " + depense.description_depense
             ));
         }
     }

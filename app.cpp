@@ -9,7 +9,7 @@ int main(int argc, char **argv) {
     Controller *controller = new Controller(user, view);
 
     QMessageBox::information(view->getWindow(), "Information 📇",
-            "Allez dans menu > ajouter un nouveau budget pour définir et suivre votre premier budget 😆");
+            "Allez dans menu > définir un nouveau budget : remplir le formulaire 😆");
 
     return app.exec();
 }
